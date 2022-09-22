@@ -92,7 +92,7 @@ class LinkedList{
 
 class FileSystem{
     constructor(){
-        this.root = new Node("root", "", null);
+        this.root = new Node("root", "", "root", null);
         this.currentDir = this.root;
     }
 
@@ -216,9 +216,52 @@ class FileSystem{
     }
 }
 
-let List = new LinkedList();
-let File = new FileSystem();
+class QuizSystem{
+    constructor(questionID, questionNumber){
+        this.questionID = questionID;
+        this.questionNumber = questionNumber;
+        this.answerFile = new FileSystem("root", "", "root", null);
+    }
 
+    makeAnswer(){
+        if (this.questionID == "FileDirectoryQuiz" && this.questionNumber == 1){
+
+            this.answerFile.mkdir("python");
+            this.answerFile.cd("python");
+            this.answerFile.touch("test.py")
+            this.answerFile.touch("test2.py");
+        }
+
+        return this.answerFile;
+    }
+
+    judge(userAnswer, answer){
+        if (userAnswer == answer) return true;
+        else return false;
+    }
+
+}
+
+let File = new FileSystem("root", "", "root", null);
+let Quiz = new QuizSystem("FileDirectoryQuiz", 1);
+
+//let stdAnswer = Quiz.makeAnswer();
+//console.log(stdAnswer)
+//Quiz.makeAnswer()
+console.log(File.mkdir("python"));
+console.log(File.cd("python"));
+console.log(File.touch("test.py"));
+console.log(File.touch("test2.py"));
+//console.log(File == Quiz.makeAnswer());
+let File2 = new FileSystem("root", "", "root", null);
+console.log(File2.mkdir("python"));
+console.log(File2.cd("python"));
+console.log(File2.touch("test.py"));
+console.log(File2.touch("test2.py"));
+console.log(File === File2);
+
+
+//console.log(Quiz.judge(File, Quiz))
 // console.log(List.append("root"))
 // console.log(List.append("ばか"))
 // console.log(List.append("クズ"))

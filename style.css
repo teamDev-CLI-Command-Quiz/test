@@ -4,7 +4,7 @@
 
 h1,h2,h3,h4,h5,h6,p {
     margin: 0;
-    color:white;
+    color: black;
 }
 
 .bg-header {
@@ -19,9 +19,19 @@ h1,h2,h3,h4,h5,h6,p {
     color: rgb(3, 239, 3);
     font-size: x-large;
 }
-
+.Quiz {
+    background-color: white;
+}
 .CLI {
     background-color: black;
+}
+.output-box {
+	position: relative;
+	padding-bottom: 3rem;
+}
+.input-box {
+	position: absolute;
+	bottom: 0;
 }
 
 #CLIOutputDiv
