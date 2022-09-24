@@ -220,142 +220,76 @@ class QuizSystem{
     constructor(questionID, questionNumber){
         this.questionID = questionID;
         this.questionNumber = questionNumber;
-        this.answerFile = new FileSystem("root", "", "root", null);
+        this.answerFile = new FileSystem();
     }
 
     makeAnswer(){
-        if (this.questionID == "FileDirectoryQuiz" && this.questionNumber == 1){
+        if (this.questionID == "FileDirectoryQuiz" && this.questionNumber == "1"){
 
             this.answerFile.mkdir("python");
             this.answerFile.cd("python");
             this.answerFile.touch("test.py")
             this.answerFile.touch("test2.py");
+
+            //answerList[1]
         }
 
         return this.answerFile;
     }
+    answerCase_fileDirectory_Question1(userAnswer){
+        return this.answerFile.currentDir.name === userAnswer.currentDir.name && this.answerFile.currentDir.list.printList() === userAnswer.currentDir.list.printList()
+        // return userAnswer.currentDir.list.printList()
+    }
 
-    judge(userAnswer, answer){
-        if (userAnswer == answer) return true;
-        else return false;
+    answerCases(userAnswer){
+        if (this.questionID == "FileDirectoryQuiz" && this.questionNumber == "1"){
+            answerCase_fileDirectory_Question1(userAnswer);
+        }
     }
 
 }
 
-let File = new FileSystem("root", "", "root", null);
-let Quiz = new QuizSystem("FileDirectoryQuiz", 1);
+let File = new FileSystem();
+let Quiz = new QuizSystem("FileDirectoryQuiz", "1");
 
 //let stdAnswer = Quiz.makeAnswer();
 //console.log(stdAnswer)
-//Quiz.makeAnswer()
-console.log(File.mkdir("python"));
-console.log(File.cd("python"));
-console.log(File.touch("test.py"));
-console.log(File.touch("test2.py"));
-//console.log(File == Quiz.makeAnswer());
-let File2 = new FileSystem("root", "", "root", null);
-console.log(File2.mkdir("python"));
-console.log(File2.cd("python"));
-console.log(File2.touch("test.py"));
-console.log(File2.touch("test2.py"));
-console.log(File === File2);
-
-
-//console.log(Quiz.judge(File, Quiz))
-// console.log(List.append("root"))
-// console.log(List.append("ばか"))
-// console.log(List.append("クズ"))
-
-// console.log(List.popFront())
-// console.log(List);
-
-// console.log(File.pwd());
-// console.log(File.mkdir("R"));
+Quiz.makeAnswer()
 // console.log(File.mkdir("python"));
-// console.log(File.mkdir("java"));
-// console.log(File.mkdir("javascript"));
-// console.log(File.mkdir("javascript"));
-// console.log(File.mkdir("Go"));
-// console.log(File.pwd());
-// console.log(File.ls());
 // console.log(File.cd("python"));
-// console.log(File.touch("test.R")); 
-// console.log(File.touch("ML.R"));
-// console.log(File.mkdir("Go"));
-// console.log(File.ls());
-// console.log(File.cd(".."));
-// console.log(File.cd(".."));
-// console.log(File.pwd());
-// console.log(File.mkdir("test"));
-// console.log(File.cd("test"));
-// console.log(File.touch("test.py"));
-// console.log(File.mkdir("test2"));
-// console.log(File.touch("test2.py"));
-// console.log(File.pwd());
-// console.log(File.ls());
-// console.log(File.setContent("test.py","こんにちは"));
-// console.log(File.print("test.py"));
-// console.log(File.rm("test.py"));
-// console.log(File.ls());
-// console.log(File.print("test.py"));
-// console.log(File.mkdir("test3"));
-// console.log(File.cd(".."));
-// console.log(File.pwd());
-// console.log(File.ls());
-
-
-
-// 例題
-// pythonディレクトリの下にtest.pyとtest2.pyを作ってlsコマンドで表示してください
-
-// console.log("-------不正解--------")
-// //間違いの例
-// //ディレクトリとファイルの作成
-// console.log(File.mkdir("python"));
 // console.log(File.touch("test.py"));
 // console.log(File.touch("test2.py"));
+console.log(Quiz);
 
-// //回答の確認
-// console.log(File.ls());
+//NOTE:仮提出用の関数
+function submit(){
+    let submit = document.getElementById("submit");
 
+    submit.addEventListener("click", function(){
+        console.log(Quiz.answerCase_fileDirectory_Question1(File));
+    })
+}
+submit()
 
-// console.log("-------正解--------")
-// File = new FileSystem();
-// //正解の例
-// //ディレクトリとファイルの作成
-// console.log(File.mkdir("python"));
-// console.log(File.mkdir("python2"));
-// console.log(File.cd("python"));
-// console.log(File.touch("test3.py"));
-// console.log(File.touch("test.py"));
-// //console.log(File.setContent("test.py","こんにちは"));
-// // console.log(File.cp("test.py", "test4.py"));
-// //console.log(File.print("test.py"));
-// console.log(File.touch("test2.py"));
-// console.log(File.ls());
-// console.log(File.pwd());
-// console.log(File.cd(".."));
-// console.log(File.cp("python", "python2"));
-// console.log(File.cd(".."));
-// console.log(File.cd("python2"));
-// console.log(File.pwd());
-// // //回答の確認
-// console.log(File.ls());
+//NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
+function questionIdParser(){
+    let questionButton = document.getElementById("questionButton");
+    let questionType, questionNumber, position;
+    questionButton.addEventListener("click", function(){
+        position = questionButton.value.indexOf("_");
+        questionType = questionButton.value.substring(0, position - 1);
+        questionNumber = questionButton.value.substring(position);
+    })
 
-// console.log(File.mv("test.py","python2"))
-//console.log(File.print("test4.py"));
-//console.log(File.ls())
-// console.log(File.pwd())
-// console.log(File.cd(".."));
-// console.log(File.ls())
-
+    Quiz = new QuizSystem(questionType, questionNumber);
+}
 
 let CLITextInput = document.getElementById("CLITextInput");
 let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
 
 CLITextInput.addEventListener("keyup", (event) => submitSerch(event));
 
-
+//NOTE:コントローラーをクラスにする必要あるのか
 class Controller{
 
     static commandLineParser(CLITextInputString){
@@ -392,7 +326,8 @@ class Controller{
         let argA = parsedStringInputArray[1];
         let argB = parsedStringInputArray[2];
         let commandName = parsedStringInputArray[0];
-
+        
+        //NOTE:swich文で書こう
         if (commandName == "mkdir") result = File.mkdir(argA);
         else if (commandName == "cd") result = File.cd(argA);
         else if (commandName == "touch") result = File.touch(argA);
@@ -404,7 +339,8 @@ class Controller{
         else if (commandName == "mv") result = File.mv(argA, argB);
         else if (commandName == "cp") result = File.cp(argA, argB);
 
-        else console.log("FileSystem.evaluatedResultsStringFromParsedStringInputArray:: invalid command name")
+        else result = "No such command"
+        // console.log("FileSystem.evaluatedResultsStringFromParsedStringInputArray:: invalid command name")
 
         return result;
     }
