@@ -1,5 +1,14 @@
 class Node{
-    constructor(name, attribute, parent, content = "No data"){
+    constructor(name, attribute, parent, content = `
+    function submit(){
+        let submit = document.getElementById("submit");
+    
+        submit.addEventListener("click", function(){
+            console.log(Quiz.answerCase_fileDirectory_Question1(File));
+        })
+    }
+    submit()`
+    ){
         this.name = name;
         this.attribute = attribute;
         this.parent = parent;
@@ -194,7 +203,6 @@ class FileSystem{
     cp(object1, object2){
         let content;
         if (this.currentDir.list.search(object1) === null) return "no such file or directory.";
-        //引数の数が複雑なため一旦凍結
         //ディレクトリ直下へのコピー
         if (this.currentDir.list.search(object1).attribute === "Directory" && this.currentDir.list.search(object2).attribute === "Directory") {
         
@@ -259,17 +267,17 @@ Quiz.makeAnswer()
 // console.log(File.cd("python"));
 // console.log(File.touch("test.py"));
 // console.log(File.touch("test2.py"));
-console.log(Quiz);
+// console.log(Quiz);
 
 //NOTE:仮提出用の関数
-function submit(){
-    let submit = document.getElementById("submit");
+// function submit(){
+//     let submit = document.getElementById("submit");
 
-    submit.addEventListener("click", function(){
-        console.log(Quiz.answerCase_fileDirectory_Question1(File));
-    })
-}
-submit()
+//     submit.addEventListener("click", function(){
+//         console.log(Quiz.answerCase_fileDirectory_Question1(File));
+//     })
+// }
+// submit()
 
 //NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
 function questionIdParser(){
@@ -356,4 +364,3 @@ function submitSerch(event){
         CLITextOutputDiv.scrollTop = CLITextOutputDiv.scrollHeight;
     }
 }
-

@@ -1,0 +1,54 @@
+.vh-60 {
+    height: 60vh;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+    margin: 0;
+    color: black;
+}
+
+.bg-header {
+    background: #2A69AE;
+}
+
+.bg-result {
+    background: black;
+}
+
+.output-text {
+    color: rgb(3, 239, 3);
+    font-size: x-large;
+}
+.Quiz {
+    background-color: white;
+}
+.CLI {
+    background-color: black;
+}
+.output-box {
+	position: relative;
+	padding-bottom: 3rem;
+}
+.input-box {
+	position: absolute;
+	bottom: 0;
+}
+
+#CLIOutputDiv
+{
+    overflow: scroll;
+}
+
+/* index */
+.rem1p2 {
+	font-size: 1.2rem;
+}
+
+.px5p0rem {
+    padding: 0px 5rem;
+}
+
+/* quiz */
+.rem1p5 {
+    font-size: 1.5rem;
+}
