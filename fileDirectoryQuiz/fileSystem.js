@@ -275,16 +275,6 @@ quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("python");
 quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("Java");
 
 
-//NOTE:仮提出用の関数
-function submit(){
-    let submit = document.getElementById("submit");
-
-    submit.addEventListener("click", function(){
-        console.log(Quiz.answerCases(File));
-    })
-}
-
-submit()
 //NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
 function questionIdParser(){
     let questionButton = document.getElementById("questionButton");
@@ -368,3 +358,16 @@ function submitSerch(event){
         CLITextOutputDiv.scrollTop = CLITextOutputDiv.scrollHeight;
     }
 }
+
+//NOTE:仮提出用の関数
+function submit(){
+    let submit = document.getElementById("submit");
+
+    submit.addEventListener("click", function(){
+        console.log(Quiz.answerCases(File));
+        if (Quiz.answerCases(File)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
+        else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
+    })
+}
+
+submit()
