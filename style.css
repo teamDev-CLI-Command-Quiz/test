@@ -38,3 +38,17 @@ h1,h2,h3,h4,h5,h6,p {
 {
     overflow: scroll;
 }
+
+/* index */
+.rem1p2 {
+	font-size: 1.2rem;
+}
+
+.px5p0rem {
+    padding: 0px 5rem;
+}
+
+/* quiz */
+.rem1p5 {
+    font-size: 1.5rem;
+}

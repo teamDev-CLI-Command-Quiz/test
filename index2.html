@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Command Line Interface</title>
+</head>
+<body class="bg-result">
+	<div class="vh-100">
+		<div class="d-flex justify-content-center py-4">
+			<h2 class="text-success text-center mx-5">CLIコマンドクイズ</h2>
+			<a href="" class="btn border-success text-success rem1p2">ユーザー登録</a>
+		</div>
+		<div id="CLIOutputDiv" class="border border-success container vh-60 border-success CLI p-3 output-text col-md-5">
+        </div>     
+        <div class="container input-group py-2 CLI col-md-5">
+			<input type="text" id ="CLITextInput" class="form-control" placeholder="type any command" aria-label="Username" aria-describedby="addon-wrapping">
+        </div>   
+		<div class="d-flex justify-content-around text-center">
+			<div>
+				<div>
+					<a href="fileDirectoryQuizList.html" class="btn btn-block border-success text-success rem1p2 m-4">ファイルディレクトリクイズ</a>
+				</div>
+				<div>
+					<a href="gitQuizList.html" class="btn btn-block border-success text-success  rem1p2 m-4">Gitコマンドクイズ</a>
+				</div>
+			</div>
+			<div>
+				<div>
+					<a href="" class="btn btn-block border-success text-success rem1p2 m-4">フリーモード</a>
+				</div>
+				<div>
+					<a href="linuxQuizList.html" class="btn btn-block border-success text-success rem1p2 m-4">Linuxコマンドクイズ</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="fileSystem.js"></script>
+</body>
+</html>
