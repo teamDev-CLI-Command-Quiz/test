@@ -235,7 +235,7 @@ class QuizSystem{
     //     return quizItemsList[this.questionID].answer;
     // }
     answerCases(userAnswer){
-        //NOTE:swich文で書けるかも
+        //NOTE:swich文で書ける
         if (this.questionID === "FileDirectoryQuiz_1"){
             return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
         }
@@ -246,8 +246,8 @@ class QuizSystem{
 }
 
 class QuizItem{
-    constructor(quizID, title, number, content, hint){
-        this.quizID = quizID;
+    constructor(type, title, number, content, hint){
+        this.type = type;
         this.title = title;
         this.number = number;
         this.content = content;
@@ -258,7 +258,7 @@ class QuizItem{
 
 let quizItemsList = {
     "test" : new QuizItem("test","ディレクトリとファイル", "test", "pythonディレクトリ直下にtest.pyとtest2.pyを作成してください", ""),
-    "FileDirectoryQuiz_1" : new QuizItem("FileDirectoryQuiz_1","ディレクトリの作成", 1, "pythonディレクトリとJavaディレクトリを作成してください。", "mkdir ディレクトリ名　でディレクトリを作成できます。")
+    "FileDirectoryQuiz_1" : new QuizItem("FileDirectoryQuiz","問題１ディレクトリの作成", 1, "pythonディレクトリとJavaディレクトリを作成してください。", "mkdir ディレクトリ名　でディレクトリを作成できます。")
 }
 
 let File = new FileSystem();
