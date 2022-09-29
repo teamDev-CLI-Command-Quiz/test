@@ -237,19 +237,7 @@ class QuizSystem{
         this.questionID = questionID;
     }
 
-    // makeAnswer(){
-    //     if (this.questionID == "FileDirectoryQuiz_1"){
-
-    //         // this.answerFile.mkdir("python");
-    //         // this.answerFile.cd("python");
-    //         // this.answerFile.touch("test.py")
-    //         // this.answerFile.touch("test2.py");
-
-    //         quizItemsList[this.questionID].answer;
-    //     }
-
-    //     return quizItemsList[this.questionID].answer;
-    // }
+    //NOTE:模範解答と照合
     answerCases(userAnswer){
         //NOTE:swich文で書ける
         if (this.questionID === "FileDirectoryQuiz_1"){
@@ -258,6 +246,17 @@ class QuizSystem{
         else if (this.questionID === "test"){
             return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
         }
+    }
+    
+    //NOTE:仮提出用の関数
+    submit(){
+        let submit = document.getElementById("submit");
+
+        submit.addEventListener("click", function(){
+            console.log(Quiz.answerCases(File));
+            if (Quiz.answerCases(File)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
+            else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
+        })
     }
 }
 
@@ -379,15 +378,4 @@ function submitSerch(event){
     }
 }
 
-//NOTE:仮提出用の関数
-function submit(){
-    let submit = document.getElementById("submit");
-
-    submit.addEventListener("click", function(){
-        console.log(Quiz.answerCases(File));
-        if (Quiz.answerCases(File)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
-        else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
-    })
-}
-
-submit()
+Quiz.submit()
