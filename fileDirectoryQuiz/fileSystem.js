@@ -214,6 +214,22 @@ class FileSystem{
             return `${object1} is copied as ${object2}.`;
         }
     }
+
+    tree(iterator){
+        let space = " "
+        //iterator = iterator.list.head
+        while (iterator != null){
+            //ans += "/" + iterator.name
+            console.log(iterator.name)
+            while (iterator.list.head != null){
+                //ans += "/" + iterator.list.head.name
+                console.log(iterator.list.head.name)
+                if (iterator.list.head.list.head != null) this.tree(iterator.list.head.list.head)
+                iterator.list.head = iterator.list.head.next
+            }
+            iterator = iterator.next
+        }
+    }
 }
 
 class QuizSystem{
@@ -258,10 +274,18 @@ class QuizItem{
 
 let quizItemsList = {
     "test" : new QuizItem("test","ディレクトリとファイル", "test", "pythonディレクトリ直下にtest.pyとtest2.pyを作成してください", ""),
+
     "FileDirectoryQuiz_1" : new QuizItem("FileDirectoryQuiz","問題１ディレクトリの作成", 1, "pythonディレクトリとJavaディレクトリを作成してください。", "mkdir ディレクトリ名　でディレクトリを作成できます。")
 }
 
 let File = new FileSystem();
+
+File.mkdir("python")
+File.mkdir("java")
+File.cd("python")
+File.touch("test.py")
+
+File.tree()
 //let Quiz = new QuizSystem("FileDirectoryQuiz_1");
 let Quiz = new QuizSystem("test");
 
@@ -278,6 +302,8 @@ quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("Java");
 //NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
 function questionIdParser(){
     let questionButton = document.getElementById("questionButton");
+    console.log(questionButton.value)
+
     let questionID;
     questionButton.addEventListener("click", function(){
         questionID = questionButton.value;
@@ -285,7 +311,7 @@ function questionIdParser(){
 
     Quiz = new QuizSystem(questionID);
 }
-
+questionIdParser()
 let CLITextInput = document.getElementById("CLITextInput");
 let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
 
