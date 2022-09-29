@@ -1,13 +1,13 @@
 class Node{
     constructor(name, attribute, parent, content = `
-    function submit(){
-        let submit = document.getElementById("submit");
+    <br>function submit(){<br>
+        &ensp;&ensp;&ensp;&ensp;let submit = document.getElementById("submit");<br>
     
-        submit.addEventListener("click", function(){
-            console.log(Quiz.answerCase_fileDirectory_Question1(File));
-        })
-    }
-    submit()`
+        &ensp;&ensp;&ensp;&ensp;submit.addEventListener("click", function(){<br>
+            &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;console.log(Quiz.answerCase_fileDirectory_Question1(File));<br>
+            &ensp;&ensp;&ensp;&ensp;})<br>
+            }<br>
+    `
     ){
         this.name = name;
         this.attribute = attribute;
@@ -222,75 +222,28 @@ class FileSystem{
             return `${object1} is copied as ${object2}.`;
         }
     }
-}
-
-class QuizSystem{
-    constructor(questionID, questionNumber){
-        this.questionID = questionID;
-        this.questionNumber = questionNumber;
-        this.answerFile = new FileSystem();
-    }
-
-    makeAnswer(){
-        if (this.questionID == "FileDirectoryQuiz" && this.questionNumber == "1"){
-
-            this.answerFile.mkdir("python");
-            this.answerFile.cd("python");
-            this.answerFile.touch("test.py")
-            this.answerFile.touch("test2.py");
-
-            //answerList[1]
-        }
-
-        return this.answerFile;
-    }
-    answerCase_fileDirectory_Question1(userAnswer){
-        return this.answerFile.currentDir.name === userAnswer.currentDir.name && this.answerFile.currentDir.list.printList() === userAnswer.currentDir.list.printList()
-        // return userAnswer.currentDir.list.printList()
-    }
-
-    answerCases(userAnswer){
-        if (this.questionID == "FileDirectoryQuiz" && this.questionNumber == "1"){
-            answerCase_fileDirectory_Question1(userAnswer);
+    tree(iterator){
+        let space = " "
+        //iterator = iterator.list.head
+        while (iterator != null){
+            //ans += "/" + iterator.name
+            console.log(iterator.name)
+            Controller.appendResultParagraph(CLITextOutputDiv, iterator.name)
+            while (iterator.list.head != null){
+                //ans += "/" + iterator.list.head.name
+                console.log(iterator.list.head.name)
+                Controller.appendResultParagraph(CLITextOutputDiv, iterator.list.head.name)
+                if (iterator.list.head.list.head != null) this.tree(iterator.list.head.list.head)
+                iterator.list.head = iterator.list.head.next
+            }
+            iterator = iterator.next
         }
     }
-
 }
+
+
 
 let File = new FileSystem();
-let Quiz = new QuizSystem("FileDirectoryQuiz", "1");
-
-//let stdAnswer = Quiz.makeAnswer();
-//console.log(stdAnswer)
-Quiz.makeAnswer()
-// console.log(File.mkdir("python"));
-// console.log(File.cd("python"));
-// console.log(File.touch("test.py"));
-// console.log(File.touch("test2.py"));
-// console.log(Quiz);
-
-//NOTE:仮提出用の関数
-// function submit(){
-//     let submit = document.getElementById("submit");
-
-//     submit.addEventListener("click", function(){
-//         console.log(Quiz.answerCase_fileDirectory_Question1(File));
-//     })
-// }
-// submit()
-
-//NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
-function questionIdParser(){
-    let questionButton = document.getElementById("questionButton");
-    let questionType, questionNumber, position;
-    questionButton.addEventListener("click", function(){
-        position = questionButton.value.indexOf("_");
-        questionType = questionButton.value.substring(0, position - 1);
-        questionNumber = questionButton.value.substring(position);
-    })
-
-    Quiz = new QuizSystem(questionType, questionNumber);
-}
 
 let CLITextInput = document.getElementById("CLITextInput");
 let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
@@ -346,6 +299,7 @@ class Controller{
         else if (commandName == "rm") result = File.rm(argA);
         else if (commandName == "mv") result = File.mv(argA, argB);
         else if (commandName == "cp") result = File.cp(argA, argB);
+        else if (commandName == "tree") File.tree(File.root.list.head);
 
         else result = "No such command"
         // console.log("FileSystem.evaluatedResultsStringFromParsedStringInputArray:: invalid command name")
