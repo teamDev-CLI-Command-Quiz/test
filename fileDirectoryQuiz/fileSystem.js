@@ -280,12 +280,6 @@ let quizItemsList = {
 
 let File = new FileSystem();
 
-File.mkdir("python")
-File.mkdir("java")
-File.cd("python")
-File.touch("test.py")
-
-File.tree()
 //let Quiz = new QuizSystem("FileDirectoryQuiz_1");
 let Quiz = new QuizSystem("test");
 
@@ -311,7 +305,7 @@ function questionIdParser(){
 
     Quiz = new QuizSystem(questionID);
 }
-questionIdParser()
+//questionIdParser()
 let CLITextInput = document.getElementById("CLITextInput");
 let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
 
