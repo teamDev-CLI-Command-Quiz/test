@@ -246,6 +246,9 @@ class QuizSystem{
         else if (this.questionID === "test"){
             return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
         }
+        else if (this.questionID === "FileDirectoryQuiz_2"){
+            return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
+        }
     }
     
     //NOTE:仮提出用の関数
@@ -256,6 +259,10 @@ class QuizSystem{
             console.log(Quiz.answerCases(File));
             if (Quiz.answerCases(File)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
             else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
+
+            let scoring = document.getElementById("scoring");
+            if (Quiz.answerCases(File)) scoring.innerHTML = "正解！！";
+            else scoring.innerHTML = "不正解！！";
         })
     }
 }
@@ -274,13 +281,16 @@ class QuizItem{
 let quizItemsList = {
     "test" : new QuizItem("test","ディレクトリとファイル", "test", "pythonディレクトリ直下にtest.pyとtest2.pyを作成してください", ""),
 
-    "FileDirectoryQuiz_1" : new QuizItem("FileDirectoryQuiz","問題１ディレクトリの作成", 1, "pythonディレクトリとJavaディレクトリを作成してください。", "mkdir ディレクトリ名　でディレクトリを作成できます。")
+    "FileDirectoryQuiz_1" : new QuizItem("FileDirectoryQuiz","問題１ディレクトリの作成", 1, "pythonディレクトリとJavaディレクトリを作成してください。", "mkdir ディレクトリ名　でディレクトリを作成できます。"),
+
+    "FileDirectoryQuiz_2" : new QuizItem("FileDirectoryQuiz","問題２カレントディレクトリの移動", 2, "pythonディレクトリを作成し、pyhtonディレクトリをカレントディレクトリにしてください。", "cd ディレクトリ名　でカレントディレクトリを設定できます。")
 }
 
 let File = new FileSystem();
 
 //let Quiz = new QuizSystem("FileDirectoryQuiz_1");
-let Quiz = new QuizSystem("test");
+let Quiz = new QuizSystem("FileDirectoryQuiz_2");
+//let Quiz = new QuizSystem("test");
 
 //NOTE:クイズの解答を生成
 quizItemsList["test"].answer.mkdir("python");
@@ -290,6 +300,9 @@ quizItemsList["test"].answer.touch("test2.py");
 
 quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("python");
 quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("Java");
+
+quizItemsList["FileDirectoryQuiz_2"].answer.mkdir("python");
+quizItemsList["FileDirectoryQuiz_2"].answer.cd("python");
 
 
 //NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
@@ -378,4 +391,36 @@ function submitSerch(event){
     }
 }
 
-Quiz.submit()
+// 提出画面
+function submitViewBlock() {
+    let submitView = document.getElementById("submitView");
+
+    submitView.classList.remove("d-none");
+    submitView.classList.add("d-block");
+}
+
+function submitViewNone() {
+    let submitView = document.getElementById("submitView");
+
+    submitView.classList.remove("d-block");
+    submitView.classList.add("d-none");
+}
+
+// 採点画面
+function scoringViewBlock() {
+    let scoringView = document.getElementById("scoringView");
+
+    submitViewNone();
+    scoringView.classList.remove("d-none");
+    scoringView.classList.add("d-block");
+}
+
+function scoringViewNone() {
+    let scoringView = document.getElementById("scoringView");
+
+    submitViewNone();
+    scoringView.classList.remove("d-block");
+    scoringView.classList.add("d-none");
+}
+
+Quiz.submit();
