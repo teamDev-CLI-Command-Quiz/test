@@ -253,8 +253,8 @@ class QuizSystem{
         let submit = document.getElementById("submit");
 
         submit.addEventListener("click", function(){
-            console.log(Quiz.answerCases(File));
-            if (Quiz.answerCases(File)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
+            console.log(Quiz.answerCases(User));
+            if (Quiz.answerCases(User)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
             else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
         })
     }
@@ -277,7 +277,7 @@ let quizItemsList = {
     "FileDirectoryQuiz_1" : new QuizItem("FileDirectoryQuiz","問題１ディレクトリの作成", 1, "pythonディレクトリとJavaディレクトリを作成してください。", "mkdir ディレクトリ名　でディレクトリを作成できます。")
 }
 
-let File = new FileSystem();
+let User = new FileSystem();
 
 //let Quiz = new QuizSystem("FileDirectoryQuiz_1");
 let Quiz = new QuizSystem("test");
@@ -288,14 +288,16 @@ quizItemsList["test"].answer.cd("python");
 quizItemsList["test"].answer.touch("test.py");
 quizItemsList["test"].answer.touch("test2.py");
 
+//問題１
 quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("python");
 quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("Java");
-
+//問題３ 元々ファイルディレクトリがある問題
+//User.mkdir("python").cd("python").mkdir("math").mkdir("web").cd("math")
 
 //NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
 function questionIdParser(){
     let questionButton = document.getElementById("questionButton");
-    console.log(questionButton.value)
+    //console.log(questionButton.value)
 
     let questionID;
     questionButton.addEventListener("click", function(){
@@ -349,16 +351,16 @@ class Controller{
         let commandName = parsedStringInputArray[0];
         
         //NOTE:swich文で書こう
-        if (commandName == "mkdir") result = File.mkdir(argA);
-        else if (commandName == "cd") result = File.cd(argA);
-        else if (commandName == "touch") result = File.touch(argA);
-        else if (commandName == "ls") result = File.ls();
-        else if (commandName == "pwd") result = File.pwd();
-        else if (commandName == "print") result = File.print(argA);
-        else if (commandName == "setContent") result = File.setContent(argA, argB);
-        else if (commandName == "rm") result = File.rm(argA);
-        else if (commandName == "mv") result = File.mv(argA, argB);
-        else if (commandName == "cp") result = File.cp(argA, argB);
+        if (commandName == "mkdir") result = User.mkdir(argA);
+        else if (commandName == "cd") result = User.cd(argA);
+        else if (commandName == "touch") result = User.touch(argA);
+        else if (commandName == "ls") result = User.ls();
+        else if (commandName == "pwd") result = User.pwd();
+        else if (commandName == "print") result = User.print(argA);
+        else if (commandName == "setContent") result = User.setContent(argA, argB);
+        else if (commandName == "rm") result = User.rm(argA);
+        else if (commandName == "mv") result = User.mv(argA, argB);
+        else if (commandName == "cp") result = User.cp(argA, argB);
 
         else result = "No such command"
         // console.log("FileSystem.evaluatedResultsStringFromParsedStringInputArray:: invalid command name")
