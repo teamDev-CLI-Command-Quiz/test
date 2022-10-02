@@ -235,15 +235,11 @@ class FileSystem{
 class QuizSystem{
     constructor(){
         this.answer = new FileSystem();
-
-        //NOTE:模範解答の作成、ファイルごとに作成
-        this.answer.mkdir("python");
-        this.answer.mkdir("Java");
     }
 
     //NOTE:模範解答と照合、ファイルごとに作成
     grading(userAnswer){
-        return this.answer.currentDir.name === userAnswer.currentDir.name && this.answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();    
+        return userAnswer.currentDir.name === "web";    
     }
     
     //NOTE:仮提出用の関数
@@ -265,6 +261,13 @@ class QuizSystem{
 
 let User = new FileSystem();
 let Quiz = new QuizSystem();
+
+//NOTE
+User.mkdir("python");
+User.cd("python");
+User.mkdir("web");
+User.mkdir("math");
+User.cd("math");
 
 let CLITextInput = document.getElementById("CLITextInput");
 let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
