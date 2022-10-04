@@ -228,11 +228,11 @@ class FileSystem{
         while (iterator != null){
             //ans += "/" + iterator.name
             console.log(iterator.name)
-            Controller.appendResultParagraph(CLITextOutputDiv, iterator.name)
+            appendResultParagraph(CLITextOutputDiv, iterator.name)
             while (iterator.list.head != null){
                 //ans += "/" + iterator.list.head.name
                 console.log(iterator.list.head.name)
-                Controller.appendResultParagraph(CLITextOutputDiv, iterator.list.head.name)
+                appendResultParagraph(CLITextOutputDiv, iterator.list.head.name)
                 if (iterator.list.head.list.head != null) this.tree(iterator.list.head.list.head)
                 iterator.list.head = iterator.list.head.next
             }
@@ -251,70 +251,87 @@ let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
 CLITextInput.addEventListener("keyup", (event) => submitSerch(event));
 
 //NOTE:コントローラーをクラスにする必要あるのか
-class Controller{
 
-    static commandLineParser(CLITextInputString){
-        let parsedStringInputArray = CLITextInputString.trim().split(" ");
+function commandLineParser(CLITextInputString){
+    let parsedStringInputArray = CLITextInputString.trim().split(" ");
 
-        return parsedStringInputArray;
-    }
-
-    static appendEchoParagraph(parentDiv){
-        parentDiv.innerHTML +=
-            `
-            <p class="m-0 output-text"> 
-            <span>User</span>
-            <span>@</span>
-            <span>UsernoMacBook-Pro</span> % ${CLITextInput.value} 
-            </p>
-            `;
-        return;
-    }
-
-    static appendResultParagraph(parentDiv, message){
-        //User部分はCookieでユーザー名登録？
-        parentDiv.innerHTML +=
-            `
-            <p class="m-0 output-text">
-                <span>User</span> % ${message}
-            </p>
-            `;    
-        return;    
-    }
-    static evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray){
-        let result = "";
-        console.log(parsedStringInputArray);
-        let argA = parsedStringInputArray[1];
-        let argB = parsedStringInputArray[2];
-        let commandName = parsedStringInputArray[0];
-        
-        //NOTE:swich文で書こう
-        if (commandName == "mkdir") result = File.mkdir(argA);
-        else if (commandName == "cd") result = File.cd(argA);
-        else if (commandName == "touch") result = File.touch(argA);
-        else if (commandName == "ls") result = File.ls();
-        else if (commandName == "pwd") result = File.pwd();
-        else if (commandName == "print") result = File.print(argA);
-        else if (commandName == "setContent") result = File.setContent(argA, argB);
-        else if (commandName == "rm") result = File.rm(argA);
-        else if (commandName == "mv") result = File.mv(argA, argB);
-        else if (commandName == "cp") result = File.cp(argA, argB);
-        else if (commandName == "tree") File.tree(File.root.list.head);
-
-        else result = "No such command"
-        // console.log("FileSystem.evaluatedResultsStringFromParsedStringInputArray:: invalid command name")
-
-        return result;
-    }
+    return parsedStringInputArray;
 }
 
+function appendEchoParagraph(parentDiv){
+    parentDiv.innerHTML +=
+    `
+    <p class="m-0 output-text" id="app"> 
+    <span>User</span>
+    <span>@</span>
+    <span>UsernoMacBook-Pro</span> % ${CLITextInput.value} 
+    </p>
+    `;
+    return;
+}
+
+function appendResultParagraph(parentDiv, message){
+    //User部分はCookieでユーザー名登録？
+    parentDiv.innerHTML +=
+        `
+        <p class="m-0 output-text" id="app">
+            <span>User</span> % ${message}
+        </p>
+        `;    
+    return;    
+}
+
+function evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray){
+    let result = "";
+    console.log(parsedStringInputArray);
+    let argA = parsedStringInputArray[1];
+    let argB = parsedStringInputArray[2];
+    let commandName = parsedStringInputArray[0];
+
+    //NOTE:swich文で書こう
+    if (commandName == "mkdir") result = File.mkdir(argA);
+    else if (commandName == "cd") result = File.cd(argA);
+    else if (commandName == "touch") result = File.touch(argA);
+    else if (commandName == "ls") result = File.ls();
+    else if (commandName == "pwd") result = File.pwd();
+    else if (commandName == "print") result = File.print(argA);
+    else if (commandName == "setContent") result = File.setContent(argA, argB);
+    else if (commandName == "rm") result = File.rm(argA);
+    else if (commandName == "mv") result = File.mv(argA, argB);
+    else if (commandName == "cp") result = File.cp(argA, argB);
+    else if (commandName == "tree") File.tree(File.root.list.head);
+
+    else result = "No such command"
+    // console.log("FileSystem.evaluatedResultsStringFromParsedStringInputArray:: invalid command name")
+
+    return result;
+}
+
+// const app = Vue.createApp({
+//     data: () => ({
+//         CLIOutputDiv: "",
+//         CLITextInput: ""
+//     }),
+//     methods: {
+//         appendEchoParagraph: function(){
+
+//         },
+//         appendResultParagraph: function(){
+
+//         }
+//     }
+// })
+// app.mount('#app')
+
 function submitSerch(event){
-    let parsedStringInputArray = Controller.commandLineParser(CLITextInput.value);
+    let parsedStringInputArray = commandLineParser(CLITextInput.value);
     if (event.key == "Enter"){
-        Controller.appendEchoParagraph(CLITextOutputDiv);
+        console.log(CLITextInput.value)
+        appendEchoParagraph(CLITextOutputDiv);
         CLITextInput.value = '';
-        Controller.appendResultParagraph(CLITextOutputDiv, Controller.evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray));
+        appendResultParagraph(CLITextOutputDiv, evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray));
 
         CLITextOutputDiv.scrollTop = CLITextOutputDiv.scrollHeight;
     }
 }
+
