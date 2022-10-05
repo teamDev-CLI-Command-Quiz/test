@@ -261,8 +261,26 @@ class QuizSystem{
             else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
 
             let scoring = document.getElementById("scoring");
-            if (Quiz.answerCases(File)) scoring.innerHTML = "正解！！";
-            else scoring.innerHTML = "不正解！！";
+            let resultAnimation = document.getElementById("resultAnimation");
+            if (Quiz.answerCases(File)) {
+                let result = 
+                `
+                <img src="../img/targeting.png" class="img-size p-2">
+                <h2 class="text-info pt-4 pb-4">おめでとうございます！</h2>
+                `
+                scoring.innerHTML = result;
+                resultAnimation.classList.remove("rains");
+                resultAnimation.classList.add("confetti");
+            } else {
+                let result = 
+                `
+                <img src="../img/bug-fix.png" class="img-size p-2">
+                <h2 class="text-danger pt-2 pb-4">不正解</h2>
+                `
+                scoring.innerHTML = result;
+                resultAnimation.classList.remove("confetti");
+                resultAnimation.classList.add("rains");
+            }
         })
     }
 }

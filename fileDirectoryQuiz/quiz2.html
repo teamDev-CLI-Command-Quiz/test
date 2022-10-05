@@ -42,6 +42,7 @@
 		<div class="d-none" id="submitView">
 			<div class="po-ab d-flex justify-content-center align-items-center">
 				<div class="d-flex align-items-center flex-column">
+					<img src="../img/STARTUP.png" class="img-size">
 					<h2 class="text-center">提出しますか？</h2>
 					<div class="d-flex justify-content-center p-4">
 						<button type="button" class="btn btn-primary m-2" onclick="scoringViewBlock()">提出する</button>
@@ -52,6 +53,12 @@
 		</div>
 		<div class="d-none" id="scoringView">
 			<div class="po-ab d-flex justify-content-center align-items-center">
+				<div id="resultAnimation">
+					<span></span><span></span><span></span>
+					<span></span><span></span><span></span>
+					<span></span><span></span><span></span>
+					<span></span><span></span>
+				</div>
 				<div class="d-flex align-items-center flex-column">
 					<h3 class="text-center" id="scoring"></h3>
 					<button type="button" class="btn btn-success m-2" onclick="scoringViewNone()">閉じる</button>
