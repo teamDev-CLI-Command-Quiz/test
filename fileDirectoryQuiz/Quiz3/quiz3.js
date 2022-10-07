@@ -237,9 +237,24 @@ class QuizSystem{
         this.answer = new FileSystem();
     }
 
+<<<<<<< HEAD:fileDirectoryQuiz/fileSystem.js
+    //NOTE:模範解答と照合
+    answerCases(userAnswer){
+        //NOTE:swich文で書ける
+        if (this.questionID === "FileDirectoryQuiz_1"){
+            return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
+        }
+        else if (this.questionID === "test"){
+            return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
+        }
+        else if (this.questionID === "FileDirectoryQuiz_2"){
+            return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
+        }
+=======
     //NOTE:模範解答と照合、ファイルごとに作成
     grading(userAnswer){
         return userAnswer.currentDir.name === "web";    
+>>>>>>> main:fileDirectoryQuiz/Quiz3/quiz3.js
     }
     
     //NOTE:仮提出用の関数
@@ -252,8 +267,31 @@ class QuizSystem{
             else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
 
             let scoring = document.getElementById("scoring");
+<<<<<<< HEAD:fileDirectoryQuiz/fileSystem.js
+            let resultAnimation = document.getElementById("resultAnimation");
+            if (Quiz.answerCases(File)) {
+                let result = 
+                `
+                <img src="../img/targeting.png" class="img-size p-2">
+                <h2 class="text-info pt-4 pb-4">おめでとうございます！</h2>
+                `
+                scoring.innerHTML = result;
+                resultAnimation.classList.remove("rains");
+                resultAnimation.classList.add("confetti");
+            } else {
+                let result = 
+                `
+                <img src="../img/bug-fix.png" class="img-size p-2">
+                <h2 class="text-danger pt-2 pb-4">不正解</h2>
+                `
+                scoring.innerHTML = result;
+                resultAnimation.classList.remove("confetti");
+                resultAnimation.classList.add("rains");
+            }
+=======
             if (Quiz.grading(User)) scoring.innerHTML = "正解！！";
             else scoring.innerHTML = "不正解！！";
+>>>>>>> main:fileDirectoryQuiz/Quiz3/quiz3.js
         })
     }
 }
@@ -262,6 +300,45 @@ class QuizSystem{
 let User = new FileSystem();
 let Quiz = new QuizSystem();
 
+<<<<<<< HEAD:fileDirectoryQuiz/fileSystem.js
+    "FileDirectoryQuiz_1" : new QuizItem("FileDirectoryQuiz","問題１ディレクトリの作成", 1, "pythonディレクトリとJavaディレクトリを作成してください。", "mkdir ディレクトリ名　でディレクトリを作成できます。"),
+
+    "FileDirectoryQuiz_2" : new QuizItem("FileDirectoryQuiz","問題２カレントディレクトリの移動", 2, "pythonディレクトリを作成し、pyhtonディレクトリをカレントディレクトリにしてください。", "cd ディレクトリ名　でカレントディレクトリを設定できます。")
+}
+
+let File = new FileSystem();
+
+//let Quiz = new QuizSystem("FileDirectoryQuiz_1");
+let Quiz = new QuizSystem("FileDirectoryQuiz_2");
+//let Quiz = new QuizSystem("test");
+
+//NOTE:クイズの解答を生成
+quizItemsList["test"].answer.mkdir("python");
+quizItemsList["test"].answer.cd("python");
+quizItemsList["test"].answer.touch("test.py");
+quizItemsList["test"].answer.touch("test2.py");
+
+quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("python");
+quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("Java");
+
+quizItemsList["FileDirectoryQuiz_2"].answer.mkdir("python");
+quizItemsList["FileDirectoryQuiz_2"].answer.cd("python");
+
+
+//NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
+function questionIdParser(){
+    let questionButton = document.getElementById("questionButton");
+    console.log(questionButton.value)
+
+    let questionID;
+    questionButton.addEventListener("click", function(){
+        questionID = questionButton.value;
+    })
+
+    Quiz = new QuizSystem(questionID);
+}
+//questionIdParser()
+=======
 //NOTE
 User.mkdir("python");
 User.cd("python");
@@ -269,6 +346,7 @@ User.mkdir("web");
 User.mkdir("math");
 User.cd("math");
 
+>>>>>>> main:fileDirectoryQuiz/Quiz3/quiz3.js
 let CLITextInput = document.getElementById("CLITextInput");
 let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
 
@@ -344,7 +422,10 @@ function submitSerch(event){
 // 提出画面
 function submitViewBlock() {
     let submitView = document.getElementById("submitView");
+<<<<<<< HEAD:fileDirectoryQuiz/fileSystem.js
+=======
     console.log(true)
+>>>>>>> main:fileDirectoryQuiz/Quiz3/quiz3.js
 
     submitView.classList.remove("d-none");
     submitView.classList.add("d-block");
@@ -352,7 +433,10 @@ function submitViewBlock() {
 
 function submitViewNone() {
     let submitView = document.getElementById("submitView");
+<<<<<<< HEAD:fileDirectoryQuiz/fileSystem.js
+=======
     console.log(true)
+>>>>>>> main:fileDirectoryQuiz/Quiz3/quiz3.js
 
     submitView.classList.remove("d-block");
     submitView.classList.add("d-none");
@@ -361,6 +445,10 @@ function submitViewNone() {
 // 採点画面
 function scoringViewBlock() {
     let scoringView = document.getElementById("scoringView");
+<<<<<<< HEAD:fileDirectoryQuiz/fileSystem.js
+
+=======
+>>>>>>> main:fileDirectoryQuiz/Quiz3/quiz3.js
     submitViewNone();
     scoringView.classList.remove("d-none");
     scoringView.classList.add("d-block");
@@ -373,4 +461,9 @@ function scoringViewNone() {
     scoringView.classList.remove("d-block");
     scoringView.classList.add("d-none");
 }
+<<<<<<< HEAD:fileDirectoryQuiz/fileSystem.js
+
+Quiz.submit();
+=======
 Quiz.submit()
+>>>>>>> main:fileDirectoryQuiz/Quiz3/quiz3.js
