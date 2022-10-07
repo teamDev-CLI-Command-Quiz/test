@@ -1,14 +1,5 @@
 class Node{
-    constructor(name, attribute, parent, content = `
-    <br>function submit(){<br>
-        &ensp;&ensp;&ensp;&ensp;let submit = document.getElementById("submit");<br>
-    
-        &ensp;&ensp;&ensp;&ensp;submit.addEventListener("click", function(){<br>
-            &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;console.log(Quiz.answerCase_fileDirectory_Question1(File));<br>
-            &ensp;&ensp;&ensp;&ensp;})<br>
-            }<br>
-    `
-    ){
+    constructor(name, attribute, parent, content = "No data"){
         this.name = name;
         this.attribute = attribute;
         this.parent = parent;
@@ -99,7 +90,7 @@ class LinkedList{
     }
 }
 
-class FileSystem{
+export class FileSystem{
     constructor(){
         this.root = new Node("root", "", "root", null);
         this.currentDir = this.root;
@@ -203,6 +194,7 @@ class FileSystem{
     cp(object1, object2){
         let content;
         if (this.currentDir.list.search(object1) === null) return "no such file or directory.";
+        //引数の数が複雑なため一旦凍結
         //ディレクトリ直下へのコピー
         if (this.currentDir.list.search(object1).attribute === "Directory" && this.currentDir.list.search(object2).attribute === "Directory") {
         
@@ -222,17 +214,16 @@ class FileSystem{
             return `${object1} is copied as ${object2}.`;
         }
     }
+
     tree(iterator){
         let space = " "
         //iterator = iterator.list.head
         while (iterator != null){
             //ans += "/" + iterator.name
             console.log(iterator.name)
-            appendResultParagraph(CLITextOutputDiv, iterator.name)
             while (iterator.list.head != null){
                 //ans += "/" + iterator.list.head.name
                 console.log(iterator.list.head.name)
-                appendResultParagraph(CLITextOutputDiv, iterator.list.head.name)
                 if (iterator.list.head.list.head != null) this.tree(iterator.list.head.list.head)
                 iterator.list.head = iterator.list.head.next
             }
@@ -241,97 +232,77 @@ class FileSystem{
     }
 }
 
+export class QuizSystem{
+    constructor(answer){
+        this.answer = answer
+    }
 
+    //NOTE:模範解答と照合、ファイルごとに作成
+    grading(userAnswer){
+        return this.answer.currentDir.name === userAnswer.currentDir.name && this.answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();    
+    }
+    
+    //NOTE:仮提出用の関数
+    submit(user, CLITextOutputDiv){
+        // let submit = document.getElementById("submit");
+        // console.log(Quiz.grading(user));
+        if (this.grading(user)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
+        else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
 
-let File = new FileSystem();
-
-let CLITextInput = document.getElementById("CLITextInput");
-let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
-
-CLITextInput.addEventListener("keyup", (event) => submitSerch(event));
-
-//NOTE:コントローラーをクラスにする必要あるのか
-
-function commandLineParser(CLITextInputString){
-    let parsedStringInputArray = CLITextInputString.trim().split(" ");
-
-    return parsedStringInputArray;
-}
-
-function appendEchoParagraph(parentDiv){
-    parentDiv.innerHTML +=
-    `
-    <p class="m-0 output-text" id="app"> 
-    <span>User</span>
-    <span>@</span>
-    <span>UsernoMacBook-Pro</span> % ${CLITextInput.value} 
-    </p>
-    `;
-    return;
-}
-
-function appendResultParagraph(parentDiv, message){
-    //User部分はCookieでユーザー名登録？
-    parentDiv.innerHTML +=
-        `
-        <p class="m-0 output-text" id="app">
-            <span>User</span> % ${message}
-        </p>
-        `;    
-    return;    
-}
-
-function evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray){
-    let result = "";
-    console.log(parsedStringInputArray);
-    let argA = parsedStringInputArray[1];
-    let argB = parsedStringInputArray[2];
-    let commandName = parsedStringInputArray[0];
-
-    //NOTE:swich文で書こう
-    if (commandName == "mkdir") result = File.mkdir(argA);
-    else if (commandName == "cd") result = File.cd(argA);
-    else if (commandName == "touch") result = File.touch(argA);
-    else if (commandName == "ls") result = File.ls();
-    else if (commandName == "pwd") result = File.pwd();
-    else if (commandName == "print") result = File.print(argA);
-    else if (commandName == "setContent") result = File.setContent(argA, argB);
-    else if (commandName == "rm") result = File.rm(argA);
-    else if (commandName == "mv") result = File.mv(argA, argB);
-    else if (commandName == "cp") result = File.cp(argA, argB);
-    else if (commandName == "tree") File.tree(File.root.list.head);
-
-    else result = "No such command"
-    // console.log("FileSystem.evaluatedResultsStringFromParsedStringInputArray:: invalid command name")
-
-    return result;
-}
-
-// const app = Vue.createApp({
-//     data: () => ({
-//         CLIOutputDiv: "",
-//         CLITextInput: ""
-//     }),
-//     methods: {
-//         appendEchoParagraph: function(){
-
-//         },
-//         appendResultParagraph: function(){
-
-//         }
-//     }
-// })
-// app.mount('#app')
-
-function submitSerch(event){
-    let parsedStringInputArray = commandLineParser(CLITextInput.value);
-    if (event.key == "Enter"){
-        console.log(CLITextInput.value)
-        appendEchoParagraph(CLITextOutputDiv);
-        CLITextInput.value = '';
-        appendResultParagraph(CLITextOutputDiv, evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray));
-
-        CLITextOutputDiv.scrollTop = CLITextOutputDiv.scrollHeight;
+		let scoring = document.getElementById("scoring");
+        let resultAnimation = document.getElementById("resultAnimation");
+        if (this.grading(user)) {
+			let result = 
+                `
+                <img src="../img/targeting.png" class="img-size p-2">
+                <h2 class="text-info pt-4 pb-4">おめでとうございます！</h2>
+                `
+                scoring.innerHTML = result;
+                resultAnimation.classList.remove("rains");
+                resultAnimation.classList.add("confetti");
+		} else {
+			let result = 
+                `
+                <img src="../img/bug-fix.png" class="img-size p-2">
+                <h2 class="text-danger pt-2 pb-4">不正解</h2>
+                `
+                scoring.innerHTML = result;
+                resultAnimation.classList.remove("confetti");
+                resultAnimation.classList.add("rains");
+		}
     }
 }
 
+export class ResultView{
+	// 提出画面
+	submitViewBlock(){
+		let submitView = document.getElementById("submitView");
+	
+		submitView.classList.remove("d-none");
+		submitView.classList.add("d-block");
+	}
+
+	submitViewNone(){
+		let submitView = document.getElementById("submitView");
+	
+		submitView.classList.remove("d-block");
+		submitView.classList.add("d-none");
+	}
+
+	// 採点画面
+	scoringViewBlock(){
+		let scoringView = document.getElementById("scoringView");
+	
+		this.submitViewNone();
+		scoringView.classList.remove("d-none");
+		scoringView.classList.add("d-block");
+	}
+	
+	scoringViewNone(){
+		let scoringView = document.getElementById("scoringView");
+	
+		this.submitViewNone();
+		scoringView.classList.remove("d-block");
+		scoringView.classList.add("d-none");
+	}
+}

@@ -233,22 +233,13 @@ class FileSystem{
 }
 
 class QuizSystem{
-    constructor(questionID){
-        this.questionID = questionID;
+    constructor(){
+        this.answer = new FileSystem();
     }
 
-    //NOTE:模範解答と照合
-    answerCases(userAnswer){
-        //NOTE:swich文で書ける
-        if (this.questionID === "FileDirectoryQuiz_1"){
-            return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
-        }
-        else if (this.questionID === "test"){
-            return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
-        }
-        else if (this.questionID === "FileDirectoryQuiz_2"){
-            return quizItemsList[this.questionID].answer.currentDir.name === userAnswer.currentDir.name && quizItemsList[this.questionID].answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();
-        }
+    //NOTE:模範解答と照合、ファイルごとに作成
+    grading(userAnswer){
+        return userAnswer.currentDir.list.search("factorial.py") === null;    
     }
     
     //NOTE:仮提出用の関数
@@ -256,86 +247,31 @@ class QuizSystem{
         let submit = document.getElementById("submit");
 
         submit.addEventListener("click", function(){
-            console.log(Quiz.answerCases(File));
-            if (Quiz.answerCases(File)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
+            console.log(Quiz.grading(User));
+            if (Quiz.grading(User)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
             else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
 
             let scoring = document.getElementById("scoring");
-            let resultAnimation = document.getElementById("resultAnimation");
-            if (Quiz.answerCases(File)) {
-                let result = 
-                `
-                <img src="../img/targeting.png" class="img-size p-2">
-                <h2 class="text-info pt-4 pb-4">おめでとうございます！</h2>
-                `
-                scoring.innerHTML = result;
-                resultAnimation.classList.remove("rains");
-                resultAnimation.classList.add("confetti");
-            } else {
-                let result = 
-                `
-                <img src="../img/bug-fix.png" class="img-size p-2">
-                <h2 class="text-danger pt-2 pb-4">不正解</h2>
-                `
-                scoring.innerHTML = result;
-                resultAnimation.classList.remove("confetti");
-                resultAnimation.classList.add("rains");
-            }
+            if (Quiz.grading(User)) scoring.innerHTML = "正解！！";
+            else scoring.innerHTML = "不正解！！";
         })
     }
 }
 
-class QuizItem{
-    constructor(type, title, number, content, hint){
-        this.type = type;
-        this.title = title;
-        this.number = number;
-        this.content = content;
-        this.hint = hint;
-        this.answer = new FileSystem();
-    }
-}
 
-let quizItemsList = {
-    "test" : new QuizItem("test","ディレクトリとファイル", "test", "pythonディレクトリ直下にtest.pyとtest2.pyを作成してください", ""),
+let User = new FileSystem();
+let Quiz = new QuizSystem();
 
-    "FileDirectoryQuiz_1" : new QuizItem("FileDirectoryQuiz","問題１ディレクトリの作成", 1, "pythonディレクトリとJavaディレクトリを作成してください。", "mkdir ディレクトリ名　でディレクトリを作成できます。"),
-
-    "FileDirectoryQuiz_2" : new QuizItem("FileDirectoryQuiz","問題２カレントディレクトリの移動", 2, "pythonディレクトリを作成し、pyhtonディレクトリをカレントディレクトリにしてください。", "cd ディレクトリ名　でカレントディレクトリを設定できます。")
-}
-
-let File = new FileSystem();
-
-//let Quiz = new QuizSystem("FileDirectoryQuiz_1");
-let Quiz = new QuizSystem("FileDirectoryQuiz_2");
-//let Quiz = new QuizSystem("test");
-
-//NOTE:クイズの解答を生成
-quizItemsList["test"].answer.mkdir("python");
-quizItemsList["test"].answer.cd("python");
-quizItemsList["test"].answer.touch("test.py");
-quizItemsList["test"].answer.touch("test2.py");
-
-quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("python");
-quizItemsList["FileDirectoryQuiz_1"].answer.mkdir("Java");
-
-quizItemsList["FileDirectoryQuiz_2"].answer.mkdir("python");
-quizItemsList["FileDirectoryQuiz_2"].answer.cd("python");
+//NOTE
+User.mkdir("python");
+User.cd("python");
+User.mkdir("web");
+User.mkdir("math");
+User.cd("math");
+User.touch("factorial.py");
+User.mkdir("differential");
 
 
-//NOTE:仮にファイルディレクトリクイズの第１問を取得する場合、HTMLのvalueを FileDirectoryQuiz_1 にする
-function questionIdParser(){
-    let questionButton = document.getElementById("questionButton");
-    console.log(questionButton.value)
-
-    let questionID;
-    questionButton.addEventListener("click", function(){
-        questionID = questionButton.value;
-    })
-
-    Quiz = new QuizSystem(questionID);
-}
-//questionIdParser()
 let CLITextInput = document.getElementById("CLITextInput");
 let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
 
@@ -380,19 +316,18 @@ class Controller{
         let commandName = parsedStringInputArray[0];
         
         //NOTE:swich文で書こう
-        if (commandName == "mkdir") result = File.mkdir(argA);
-        else if (commandName == "cd") result = File.cd(argA);
-        else if (commandName == "touch") result = File.touch(argA);
-        else if (commandName == "ls") result = File.ls();
-        else if (commandName == "pwd") result = File.pwd();
-        else if (commandName == "print") result = File.print(argA);
-        else if (commandName == "setContent") result = File.setContent(argA, argB);
-        else if (commandName == "rm") result = File.rm(argA);
-        else if (commandName == "mv") result = File.mv(argA, argB);
-        else if (commandName == "cp") result = File.cp(argA, argB);
+        if (commandName == "mkdir") result = User.mkdir(argA);
+        else if (commandName == "cd") result = User.cd(argA);
+        else if (commandName == "touch") result = User.touch(argA);
+        else if (commandName == "ls") result = User.ls();
+        else if (commandName == "pwd") result = User.pwd();
+        else if (commandName == "print") result = User.print(argA);
+        else if (commandName == "setContent") result = User.setContent(argA, argB);
+        else if (commandName == "rm") result = User.rm(argA);
+        else if (commandName == "mv") result = User.mv(argA, argB);
+        else if (commandName == "cp") result = User.cp(argA, argB);
 
         else result = "No such command"
-        // console.log("FileSystem.evaluatedResultsStringFromParsedStringInputArray:: invalid command name")
 
         return result;
     }
@@ -412,6 +347,7 @@ function submitSerch(event){
 // 提出画面
 function submitViewBlock() {
     let submitView = document.getElementById("submitView");
+    console.log(true)
 
     submitView.classList.remove("d-none");
     submitView.classList.add("d-block");
@@ -419,6 +355,7 @@ function submitViewBlock() {
 
 function submitViewNone() {
     let submitView = document.getElementById("submitView");
+    console.log(true)
 
     submitView.classList.remove("d-block");
     submitView.classList.add("d-none");
@@ -427,7 +364,6 @@ function submitViewNone() {
 // 採点画面
 function scoringViewBlock() {
     let scoringView = document.getElementById("scoringView");
-
     submitViewNone();
     scoringView.classList.remove("d-none");
     scoringView.classList.add("d-block");
@@ -440,5 +376,4 @@ function scoringViewNone() {
     scoringView.classList.remove("d-block");
     scoringView.classList.add("d-none");
 }
-
-Quiz.submit();
+Quiz.submit()
