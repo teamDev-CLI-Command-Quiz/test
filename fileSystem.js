@@ -232,47 +232,6 @@ export class FileSystem{
     }
 }
 
-export class QuizSystem{
-    constructor(answer){
-        this.answer = answer
-    }
-
-    //NOTE:模範解答と照合、ファイルごとに作成
-    grading(userAnswer){
-        return this.answer.currentDir.name === userAnswer.currentDir.name && this.answer.currentDir.list.printList() === userAnswer.currentDir.list.printList();    
-    }
-    
-    //NOTE:仮提出用の関数
-    submit(user, CLITextOutputDiv){
-        // let submit = document.getElementById("submit");
-        // console.log(Quiz.grading(user));
-        if (this.grading(user)) Controller.appendResultParagraph(CLITextOutputDiv, "正解！！")
-        else Controller.appendResultParagraph(CLITextOutputDiv, "不正解！！")
-
-		let scoring = document.getElementById("scoring");
-        let resultAnimation = document.getElementById("resultAnimation");
-        if (this.grading(user)) {
-			let result = 
-                `
-                <img src="../img/targeting.png" class="img-size p-2">
-                <h2 class="text-info pt-4 pb-4">おめでとうございます！</h2>
-                `
-                scoring.innerHTML = result;
-                resultAnimation.classList.remove("rains");
-                resultAnimation.classList.add("confetti");
-		} else {
-			let result = 
-                `
-                <img src="../img/bug-fix.png" class="img-size p-2">
-                <h2 class="text-danger pt-2 pb-4">不正解</h2>
-                `
-                scoring.innerHTML = result;
-                resultAnimation.classList.remove("confetti");
-                resultAnimation.classList.add("rains");
-		}
-    }
-}
-
 export class ResultView{
 	// 提出画面
 	submitViewBlock(){

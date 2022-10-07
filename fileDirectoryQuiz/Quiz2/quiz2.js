@@ -1,10 +1,58 @@
-import {FileSystem, QuizSystem, ResultView} from "../../fileSystem.js";
+import {FileSystem, ResultView} from "../../fileSystem.js";
 
+class QuizSystem{
+    constructor(){
+        this.answer = new FileSystem();
+
+        //模範解答の作成
+        this.answer.mkdir("python");
+        this.answer.cd("python");
+    }
+
+    //NOTE:模範解答と照合、ファイルごとに作成
+    grading(userAnswer){
+        return this.answer.currentDir.name === userAnswer.currentDir.name;    
+    }
+    
+    //NOTE:仮提出用の関数
+    submit(userAnswer){
+        let submit = document.getElementById("submit");
+
+        submit.addEventListener("click", function(){
+
+            let scoring = document.getElementById("scoring");
+            let resultAnimation = document.getElementById("resultAnimation");
+            //NOTE:thisの使い方
+            if (Quiz.grading(userAnswer)) {
+                let result = 
+                    `
+                    <img src="../../img/targeting.png" class="img-size p-2">
+                    <h2 class="text-info pt-4 pb-4">おめでとうございます！</h2>
+                    `
+                    //TODO:classListが取得できていない
+                    scoring.innerHTML = result;
+                    // resultAnimation.classList.remove("rains");
+                    // resultAnimation.classList.add("confetti");
+            } else {
+                let result = 
+                    `
+                    <img src="../../img/bug-fix.png" class="img-size p-2">
+                    <h2 class="text-danger pt-2 pb-4">不正解</h2>
+                    `
+                    scoring.innerHTML = result;
+                    //TODO:classListが取得できていない
+                    // resultAnimation.classList.remove("confetti");
+                    // resultAnimation.classList.add("rains");
+                } 
+        })
+    }
+}
 // UserとQuizの初期化
 let User = new FileSystem();
-
+let Quiz = new QuizSystem();
 let content = document.getElementById("content")
 let CLITextOutputDiv = document.getElementById("CLIOutputDiv");
+Quiz.submit(User);
 
 const app = Vue.createApp({
     data: () => ({
@@ -114,7 +162,7 @@ const app = Vue.createApp({
 })
 app.mount('#app')
 
-
+//NOTE:ResultViewクラスはQuizSystemに入れてもいいのではないか？
 let resultView = new ResultView();
 
 let submitBtn = document.getElementById("submit");
