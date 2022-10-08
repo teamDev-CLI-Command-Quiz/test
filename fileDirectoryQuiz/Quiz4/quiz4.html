@@ -61,7 +61,6 @@
 					</div>
 				</div>
 				<div class="container input-group py-2 p-3  col-md-5"></div>
-				  <input type="text" id ="CLITextInput" class="form-control" placeholder="type any command" aria-label="Username" aria-describedby="addon-wrapping">
 				</div>     
 			</div>
 		</div>
@@ -70,8 +69,8 @@
 				<div class="d-flex align-items-center flex-column">
 					<h2 class="text-center">提出しますか？</h2>
 					<div class="d-flex justify-content-center p-4">
-						<button type="button" class="btn btn-primary m-2" onclick="scoringViewBlock()">提出する</button>
-						<button type="button" class="btn btn-success m-2" onclick="submitViewNone()">閉じる</button>
+						<button type="button" class="btn btn-primary m-2" id="submitViewSubmit">提出する</button>
+						<button type="button" class="btn btn-success m-2" id="submitViewClose">閉じる</button>
 					</div>
 				</div>
 			</div>
@@ -80,10 +79,19 @@
 			<div class="po-ab d-flex justify-content-center align-items-center">
 				<div class="d-flex align-items-center flex-column">
 					<h3 class="text-center" id="scoring"></h3>
-					<button type="button" class="btn btn-success m-2" onclick="scoringViewNone()">閉じる</button>
+					<button type="button" class="btn btn-success m-2" id="scoringViewClose">閉じる</button>
 				</div>
 			</div>
 		</div>
-		<script src="quiz1.js"></script>
 	</body>
 </html>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+<body style="background: black">
+<div id="gameDiv" class="vh-60 d-flex flex-column">
+
+</div>
+<script type="module" src="quiz4.js"></script>
+</body>
