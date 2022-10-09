@@ -1,4 +1,4 @@
-import {FileSystem, ResultView} from "../../fileSystem.js";
+import {FileSystem} from "../../fileSystem.js";
 
 class QuizSystem{
     constructor(){
@@ -31,8 +31,8 @@ class QuizSystem{
                     `
                     //TODO:classListが取得できていない
                     scoring.innerHTML = result;
-                    // resultAnimation.classList.remove("rains");
-                    // resultAnimation.classList.add("confetti");
+                    resultAnimation.classList.remove("rains");
+                    resultAnimation.classList.add("confetti");
             } else {
                 let result = 
                     `
@@ -41,11 +41,43 @@ class QuizSystem{
                     `
                     scoring.innerHTML = result;
                     //TODO:classListが取得できていない
-                    // resultAnimation.classList.remove("confetti");
-                    // resultAnimation.classList.add("rains");
+                    resultAnimation.classList.remove("confetti");
+                    resultAnimation.classList.add("rains");
                 } 
         })
     }
+
+    // 提出画面
+	submitViewBlock(){
+		let submitView = document.getElementById("submitView");
+	
+		submitView.classList.remove("d-none");
+		submitView.classList.add("d-block");
+	}
+
+	submitViewNone(){
+		let submitView = document.getElementById("submitView");
+	
+		submitView.classList.remove("d-block");
+		submitView.classList.add("d-none");
+	}
+
+	// 採点画面
+	scoringViewBlock(){
+		let scoringView = document.getElementById("scoringView");
+	
+		this.submitViewNone();
+		scoringView.classList.remove("d-none");
+		scoringView.classList.add("d-block");
+	}
+	
+	scoringViewNone(){
+		let scoringView = document.getElementById("scoringView");
+	
+		this.submitViewNone();
+		scoringView.classList.remove("d-block");
+		scoringView.classList.add("d-none");
+	}
 }
 // UserとQuizの初期化
 let User = new FileSystem();
@@ -163,24 +195,23 @@ const app = Vue.createApp({
 app.mount('#app')
 
 //NOTE:ResultViewクラスはQuizSystemに入れてもいいのではないか？
-let resultView = new ResultView();
 
 let submitBtn = document.getElementById("submit");
 submitBtn.addEventListener("click", function(){
-	resultView.submitViewBlock();
+	Quiz.submitViewBlock();
 });
 
 let submitViewSubmit = document.getElementById("submitViewSubmit");
 submitViewSubmit.addEventListener("click", function(){
-	resultView.scoringViewBlock();
+	Quiz.scoringViewBlock();
 });
 
 let submitViewClose = document.getElementById("submitViewClose");
 submitViewClose.addEventListener("click", function(){
-	resultView.submitViewNone();
+	Quiz.submitViewNone();
 });
 
 let scoringViewClose = document.getElementById("scoringViewClose");
 scoringViewClose.addEventListener("click", function(){
-	resultView.scoringViewNone();
+	Quiz.scoringViewNone();
 });
