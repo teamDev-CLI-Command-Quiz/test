@@ -17,6 +17,7 @@
 				<button type="button" class="btn border-success text-success rem1p2 bg-result" id="submit">提出</button>
 			</div>			
 			<div class="row">
+				<!--NOTE:col-md-5の場合一部表示が歪む、col-md-6なら上手くいく?-->
 				<div id="Quiz" class="bg-result container border border-success vh-60 p-3 col-md-5">
 					<div id="title" class="p-5 text-center">
 						<h3 class="text-success">問題２：カレントディレクトリの移動</h3>
@@ -28,7 +29,7 @@
 						<h5 class="text-success">ヒント：cd ディレクトリ名　でカレントディレクトリを設定できます。</h5>
 					</div>
 				</div>
-				<div class="container border border-success vh-60 CLI p-3 output-text col-md-5">
+				<div class="container border border-success vh-60 CLI p-3 output-text overflow-scroll col-md-5">
 					<div class="container col-12 px-0" id="content">  
 						<div id="CLIOutputDiv" class="CLI output-text ml-3"></div> 
 						<div id="app">
@@ -76,6 +77,12 @@
 		</div>
 		<div class="d-none" id="scoringView">
 			<div class="po-ab d-flex justify-content-center align-items-center">
+				<div id="resultAnimation">
+					<span></span><span></span><span></span>
+					<span></span><span></span><span></span>
+					<span></span><span></span><span></span>
+					<span></span><span></span>
+				</div>
 				<div class="d-flex align-items-center flex-column">
 					<h3 class="text-center" id="scoring"></h3>
 					<button type="button" class="btn btn-success m-2" id="scoringViewClose">閉じる</button>

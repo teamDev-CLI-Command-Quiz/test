@@ -42,6 +42,10 @@ tr {
     overflow: scroll;
 }
 
+.overflow-scroll {
+    overflow: scroll;
+}
+
 /* index */
 .rem1p2 {
 	font-size: 1.2rem;

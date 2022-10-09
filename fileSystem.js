@@ -231,37 +231,3 @@ export class FileSystem{
         }
     }
 }
-
-export class ResultView{
-	// 提出画面
-	submitViewBlock(){
-		let submitView = document.getElementById("submitView");
-	
-		submitView.classList.remove("d-none");
-		submitView.classList.add("d-block");
-	}
-
-	submitViewNone(){
-		let submitView = document.getElementById("submitView");
-	
-		submitView.classList.remove("d-block");
-		submitView.classList.add("d-none");
-	}
-
-	// 採点画面
-	scoringViewBlock(){
-		let scoringView = document.getElementById("scoringView");
-	
-		this.submitViewNone();
-		scoringView.classList.remove("d-none");
-		scoringView.classList.add("d-block");
-	}
-	
-	scoringViewNone(){
-		let scoringView = document.getElementById("scoringView");
-	
-		this.submitViewNone();
-		scoringView.classList.remove("d-block");
-		scoringView.classList.add("d-none");
-	}
-}
