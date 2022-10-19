@@ -70,7 +70,6 @@ class LinkedList{
 
     search(name){
         let iterator = this.head;
-
         while (iterator != null){
             if (iterator.name === name) break;
             
@@ -215,20 +214,31 @@ export class FileSystem{
         }
     }
 
-    tree(iterator){
-        let space = " "
-        //iterator = iterator.list.head
-        while (iterator != null){
-            //ans += "/" + iterator.name
-            console.log(iterator.name)
-            while (iterator.list.head != null){
-                //ans += "/" + iterator.list.head.name
-                console.log(iterator.list.head.name)
-                if (iterator.list.head.list.head != null) this.tree(iterator.list.head.list.head)
-                iterator.list.head = iterator.list.head.next
+    treeHelper(node, indent){
+        console.log(node);
+        let iterator = node.list.head;
+        let ans = ``
+        while(iterator != null){
+            
+            ans += `<br>` + indent + `└ ${iterator.name}`;
+            if(iterator.next == null){
+                ans += this.treeHelper(iterator, indent + `&emsp;`)
+            }else{
+                ans += this.treeHelper(iterator, indent + `│&emsp;`);
             }
-            iterator = iterator.next
+            iterator = iterator.next;
         }
+        return ans
+    }
+
+    tree(directoryName=""){
+        let iterator = this.root;
+        if(directoryName != "") iterator = this.root.list.search(directoryName);
+ 
+        let ans = `<br>${iterator.name}`;
+        ans += this.treeHelper(iterator, ``);
+
+        return ans
     }
 }
 
@@ -384,9 +394,9 @@ export const App = Vue.createApp({
                 case "cp":
                     result = this.User.cp(argA, argB);
                     break;
-                // case "tree":
-                //     result = User.tree(argA)
-                //     break
+                case "tree":
+                    result = this.User.tree(argA)
+                    break
                 default:
                     result = "No such command";
             }
