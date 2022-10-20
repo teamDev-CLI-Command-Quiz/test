@@ -6,7 +6,7 @@ const app = App.mount('#app');
 let Quiz = new QuizSystem();
 // 模範解答の作成
 Quiz.answer.mkdir("python");
-Quiz.answer.cd("python");
+Quiz.answer.mkdir("Java");
 // 以下、ボタンの設定
 let submit = document.getElementById("submit");
 submit.addEventListener("click", function(){
