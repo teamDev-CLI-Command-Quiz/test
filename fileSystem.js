@@ -70,7 +70,6 @@ class LinkedList{
 
     search(name){
         let iterator = this.head;
-
         while (iterator != null){
             if (iterator.name === name) break;
             
@@ -215,19 +214,213 @@ export class FileSystem{
         }
     }
 
-    tree(iterator){
-        let space = " "
-        //iterator = iterator.list.head
-        while (iterator != null){
-            //ans += "/" + iterator.name
-            console.log(iterator.name)
-            while (iterator.list.head != null){
-                //ans += "/" + iterator.list.head.name
-                console.log(iterator.list.head.name)
-                if (iterator.list.head.list.head != null) this.tree(iterator.list.head.list.head)
-                iterator.list.head = iterator.list.head.next
+    treeHelper(node, indent){
+        console.log(node);
+        let iterator = node.list.head;
+        let ans = ``
+        while(iterator != null){
+            
+            ans += `<br>` + indent + `└ ${iterator.name}`;
+            if(iterator.next == null){
+                ans += this.treeHelper(iterator, indent + `&emsp;`)
+            }else{
+                ans += this.treeHelper(iterator, indent + `│&emsp;`);
             }
-            iterator = iterator.next
+            iterator = iterator.next;
         }
+        return ans
+    }
+
+    tree(directoryName=""){
+        let iterator = this.root;
+        if(directoryName != "") iterator = this.root.list.search(directoryName);
+ 
+        let ans = `<br>${iterator.name}`;
+        ans += this.treeHelper(iterator, ``);
+
+        return ans
     }
 }
+
+export class QuizSystem{
+    constructor(){
+        this.answer = new FileSystem()
+    }
+
+    //NOTE:模範解答と照合、ファイルごとに作成
+    grading(User){
+        return this.answer.currentDir.name === User.currentDir.name;    
+    }
+    
+    //NOTE:仮提出用の関数
+    submit(User){
+        let scoring = document.getElementById("scoring");
+        let resultAnimation = document.getElementById("resultAnimation");
+        console.log(resultAnimation)
+        //NOTE:thisの使い方
+        if (this.grading(User)) {
+            let result = 
+                `
+                <img src="../../img/targeting.png" class="img-size p-2">
+                <h2 class="text-info pt-4 pb-4">おめでとうございます！</h2>
+                `
+                //TODO:classListが取得できていない
+                scoring.innerHTML = result;
+                resultAnimation.classList.remove("rains");
+                resultAnimation.classList.add("confetti");
+        } else {
+            let result = 
+                `
+                <img src="../../img/bug-fix.png" class="img-size p-2">
+                <h2 class="text-danger pt-2 pb-4">不正解</h2>
+                `
+                scoring.innerHTML = result;
+                //TODO:classListが取得できていない
+                resultAnimation.classList.remove("confetti");
+                resultAnimation.classList.add("rains");
+        }
+    }
+
+    // 提出画面
+	submitViewBlock(){
+		let submitView = document.getElementById("submitView");
+	
+		submitView.classList.remove("d-none");
+		submitView.classList.add("d-block");
+	}
+
+	submitViewNone(){
+		let submitView = document.getElementById("submitView");
+	
+		submitView.classList.remove("d-block");
+		submitView.classList.add("d-none");
+	}
+
+	// 採点画面
+	scoringViewBlock(){
+		let scoringView = document.getElementById("scoringView");
+	
+		this.submitViewNone();
+		scoringView.classList.remove("d-none");
+		scoringView.classList.add("d-block");
+	}
+	
+	scoringViewNone(){
+		let scoringView = document.getElementById("scoringView");
+	
+		this.submitViewNone();
+		scoringView.classList.remove("d-block");
+		scoringView.classList.add("d-none");
+	}
+}
+
+export const App = Vue.createApp({
+    data: () => ({
+        CLITextInput: "",
+        histories: [
+            "",
+        ],
+        historiesCnt: 0,
+        User: new FileSystem(),
+        CLITextOutputDiv: document.getElementById("CLIOutputDiv"),
+        content: document.getElementById("content"),
+
+    }),
+    methods: {
+        commandLineParser:function(){
+            let parsedStringInputArray = this.CLITextInput.trim().split(" ");
+        
+            return parsedStringInputArray;
+        },
+        appendEchoParagraph:function(){
+            this.CLITextOutputDiv.innerHTML += 
+                `
+                    <p class="m-0 output-text align-top"> 
+                    <span>User</span>
+                    <span>@</span>
+                    <span>MacBook % ${this.CLITextInput}
+                    </span>
+                    </p>
+                `
+            if (this.CLITextInput !== "" && this.CLITextInput !== null) this.histories.push(this.CLITextInput)
+        },
+        appendResultParagraph:function(message){
+            this.CLITextOutputDiv.innerHTML +=
+                `
+                <p class="m-0 output-text">
+                <span>User</span> % ${message}
+                </p>
+                `
+        },
+        resetCLITextInput:function(){
+            this.CLITextInput = ""
+            this.content.scrollTo(0, content.scrollHeight)
+        },
+        evaluatedResultsStringFromParsedStringInputArray:function(parsedStringInputArray){
+            let result = "";
+            console.log(parsedStringInputArray);
+            let argA = parsedStringInputArray[1];
+            let argB = parsedStringInputArray[2];
+            let commandName = parsedStringInputArray[0];
+
+            switch (commandName) {
+                case "mkdir":
+                    result = this.User.mkdir(argA);
+                    break;
+                case "cd":
+                    result = this.User.cd(argA);
+                    break;
+                case "touch":
+                    result = this.User.touch(argA);
+                    break;
+                case "ls":
+                    result = this.User.ls();
+                    break;
+                case "pwd":
+                    result = this.User.pwd();
+                    break;
+                case "print":
+                    result = this.User.print(argA);
+                    break;
+                case "setContent":
+                    result = this.User.setContent(argA, argB);
+                    break;
+                case "rm":
+                    result = this.User.rm(argA);
+                    break;
+                case "mv":
+                    result = this.User.mv(argA, argB);
+                    break;
+                case "cp":
+                    result = this.User.cp(argA, argB);
+                    break;
+                case "tree":
+                    result = this.User.tree(argA)
+                    break
+                default:
+                    result = "No such command";
+            }
+            return result;
+        },
+        cursorUpToGetHistories:function(){
+            if (this.histories.length > 0) {
+                this.CLITextInput = this.histories[this.historiesCnt]
+                --this.historiesCnt 
+                if (0 > this.historiesCnt) this.historiesCnt = this.histories.length - 1
+            }
+        },
+        cursorDownToGetHistories:function(){
+            if (this.histories.length > 0) {
+                this.CLITextInput = this.histories[this.historiesCnt]
+                ++this.historiesCnt
+                if (this.histories.length <= this.historiesCnt) this.historiesCnt = 0
+            }
+        },
+        executeCLI:function(){
+            let parsedStringInputArray = this.commandLineParser()
+            this.appendEchoParagraph()
+            this.appendResultParagraph(this.evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray))
+            this.resetCLITextInput()
+        }
+    }
+})
