@@ -251,67 +251,6 @@ export class QuizSystem{
     grading(User){
         return this.answer.currentDir.name === User.currentDir.name;    
     }
-    
-    //NOTE:仮提出用の関数
-    submit(User){
-        let scoring = document.getElementById("scoring");
-        let resultAnimation = document.getElementById("resultAnimation");
-        console.log(resultAnimation)
-        //NOTE:thisの使い方
-        if (this.grading(User)) {
-            let result = 
-                `
-                <img src="../../img/targeting.png" class="img-size p-2">
-                <h2 class="text-info pt-4 pb-4">おめでとうございます！</h2>
-                `
-                //TODO:classListが取得できていない
-                scoring.innerHTML = result;
-                resultAnimation.classList.remove("rains");
-                resultAnimation.classList.add("confetti");
-        } else {
-            let result = 
-                `
-                <img src="../../img/bug-fix.png" class="img-size p-2">
-                <h2 class="text-danger pt-2 pb-4">不正解</h2>
-                `
-                scoring.innerHTML = result;
-                //TODO:classListが取得できていない
-                resultAnimation.classList.remove("confetti");
-                resultAnimation.classList.add("rains");
-        }
-    }
-
-    // 提出画面
-	submitViewBlock(){
-		let submitView = document.getElementById("submitView");
-	
-		submitView.classList.remove("d-none");
-		submitView.classList.add("d-block");
-	}
-
-	submitViewNone(){
-		let submitView = document.getElementById("submitView");
-	
-		submitView.classList.remove("d-block");
-		submitView.classList.add("d-none");
-	}
-
-	// 採点画面
-	scoringViewBlock(){
-		let scoringView = document.getElementById("scoringView");
-	
-		this.submitViewNone();
-		scoringView.classList.remove("d-none");
-		scoringView.classList.add("d-block");
-	}
-	
-	scoringViewNone(){
-		let scoringView = document.getElementById("scoringView");
-	
-		this.submitViewNone();
-		scoringView.classList.remove("d-block");
-		scoringView.classList.add("d-none");
-	}
 }
 
 export const App = Vue.createApp({
@@ -322,6 +261,7 @@ export const App = Vue.createApp({
         ],
         historiesCnt: 0,
         User: new FileSystem(),
+        Quiz: new QuizSystem(),
         CLITextOutputDiv: document.getElementById("CLIOutputDiv"),
         content: document.getElementById("content"),
 
@@ -331,6 +271,14 @@ export const App = Vue.createApp({
             let parsedStringInputArray = this.CLITextInput.trim().split(" ");
         
             return parsedStringInputArray;
+        },
+        submit:function(){
+                console.log(this.User);
+                let result;
+                if (this.Quiz.grading(this.User)) result = "正解!!";
+                else result = "不正解!!";
+                this.appendResultParagraph(result)
+                this.resetCLITextInput()
         },
         appendEchoParagraph:function(){
             this.CLITextOutputDiv.innerHTML += 
