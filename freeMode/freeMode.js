@@ -1,4 +1,4 @@
-import {App} from "../fileSystem.js";
+import {QuizSystem} from "../fileSystem.js";
 
 // マウント
-App.mount('#app');
+QuizSystem.mount('#app');

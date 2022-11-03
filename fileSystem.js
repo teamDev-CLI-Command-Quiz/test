@@ -242,18 +242,7 @@ export class FileSystem{
     }
 }
 
-export class QuizSystem{
-    constructor(){
-        this.answer = new FileSystem()
-    }
-
-    //NOTE:模範解答と照合、ファイルごとに作成
-    grading(User){
-        return this.answer.currentDir.name === User.currentDir.name;    
-    }
-}
-
-export const App = Vue.createApp({
+export const QuizSystem = Vue.createApp({
     data: () => ({
         CLITextInput: "",
         histories: [
@@ -261,7 +250,7 @@ export const App = Vue.createApp({
         ],
         historiesCnt: 0,
         User: new FileSystem(),
-        Quiz: new QuizSystem(),
+        Quiz: new FileSystem(),
         CLITextOutputDiv: document.getElementById("CLIOutputDiv"),
         content: document.getElementById("content"),
 
@@ -272,10 +261,13 @@ export const App = Vue.createApp({
         
             return parsedStringInputArray;
         },
+        //NOTE:模範解答と照合、ファイルごとに作成　各ファイルで継承を使用する
+        grading:function(User, Quiz){
+        return Quiz.currentDir.name === User.currentDir.name;    
+        },
         submit:function(){
-                console.log(this.User);
                 let result;
-                if (this.Quiz.grading(this.User)) result = "正解!!";
+                if (this.grading(this.User, this.Quiz)) result = "正解!!";
                 else result = "不正解!!";
                 this.appendResultParagraph(result)
                 this.resetCLITextInput()
