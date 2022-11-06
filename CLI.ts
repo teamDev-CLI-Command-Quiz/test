@@ -14,7 +14,7 @@ class View{
             <p class="m-0 output-text align-top"> 
             <span>User</span>
             <span>@</span>
-            <span>UsernoMacBook-Pro % ${CLI.getCLITextInput}
+            <span>MacBook % ${CLI.getCLITextInput}
             </span>
             </p>
         `
