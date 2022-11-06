@@ -10,7 +10,7 @@ var View = /** @class */ (function () {
     }
     View.appendEchoParagraph = function (CLI) {
         CLI.getCLITextOutputDiv.innerHTML +=
-            "\n            <p class=\"m-0 output-text align-top\"> \n            <span>User</span>\n            <span>@</span>\n            <span>UsernoMacBook-Pro % ".concat(CLI.getCLITextInput, "\n            </span>\n            </p>\n        ");
+            "\n            <p class=\"m-0 output-text align-top\"> \n            <span>User</span>\n            <span>@</span>\n            <span>MacBook % ".concat(CLI.getCLITextInput, "\n            </span>\n            </p>\n        ");
         if (CLI.getCLITextInput !== "" && CLI.getCLITextInput !== null)
             CLI.getHistories.push(CLI.getCLITextInput);
     };
