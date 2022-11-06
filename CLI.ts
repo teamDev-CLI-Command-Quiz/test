@@ -1,11 +1,3 @@
-// public submit():void{
-//     let result:string;
-//     if (this.grading()) result = "正解!!";
-//     else result = "不正解!!";
-//     View.appendResultParagraph(this,result)
-//     View.resetCLITextInput(this)
-// }
-
 class View{
 
     public static appendEchoParagraph(CLI:CLI):void{
@@ -531,19 +523,13 @@ class Controller{
             }
         });
     }
+
     public static callSubmit(CLI:CLI):void{
         let submitBtn:HTMLButtonElement = document.getElementById("submit")  as HTMLButtonElement;
         submitBtn.addEventListener("click", function(){
             View.appendResultParagraph(CLI,CLI.submit())
             View.resetCLITextInput(CLI)
         })
-    }
-    public static submit(CLI:CLI):void{
-        let result:string;
-        if (CLI.grading()) result = "正解!!";
-        else result = "不正解!!";
-        View.appendResultParagraph(CLI,result)
-        View.resetCLITextInput(CLI)
     }
 
     public static activateCLI(CLI:CLI):void{

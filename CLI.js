@@ -584,15 +584,6 @@ var Controller = /** @class */ (function () {
             View.resetCLITextInput(CLI);
         });
     };
-    Controller.submit = function (CLI) {
-        var result;
-        if (CLI.grading())
-            result = "正解!!";
-        else
-            result = "不正解!!";
-        View.appendResultParagraph(CLI, result);
-        View.resetCLITextInput(CLI);
-    };
     Controller.activateCLI = function (CLI) {
         this.callSubmit(CLI);
         this.callHistoriesByKeyDown(CLI);
