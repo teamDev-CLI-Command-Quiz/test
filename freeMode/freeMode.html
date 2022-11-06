@@ -8,7 +8,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="freeMode.css">
-    <script src="https://unpkg.com/vue@3.1.5"></script>
     <title>Command Line Interface</title>
 
   </head>
@@ -16,28 +15,24 @@
     <div class="bg-result vh-100 d-flex flex-column justify-content-center">
         <div class="container col-8 px-0" id="content">  
           <div id="CLIOutputDiv" class="CLI output-text ml-3"></div> 
-              <div id="app">
-                  <p class="m-0 output-text  ml-3">                
+              <p class="m-0 output-text ml-3">                
                   <span>User</span>
                   <span> @ </span>
-                  <span > UsernoMacBook-Pro %                  
-                  <input 
-                  style="
-                  background-color:transparent;
-                  color: rgb(3, 239, 3);
-                  outline: solid 1px black;
-                  border:none;
-                  font-size:x-large;width:65%"
-                  placeholder="type any command"
-                  type="text" 
-                  v-model ="CLITextInput" 
-                  v-on:keydown.enter="executeCLI" 
-                  v-on:keydown.up="cursorUpToGetHistories"
-                  v-on:keydown.down="cursorDownToGetHistories"
-                  >
-                </span>
+                  <span > UsernoMacBook-Pro %
+                    <input 
+                    id = "CLIInputDiv"
+                    style="
+                    background-color:transparent;
+                    color: rgb(3, 239, 3);
+                    outline: solid 1px black;
+                    border:none;
+                    font-size:x-large;width:65%"
+                    placeholder="type any command"
+                    type="text">
+                    </span>
               </p>
-              </div> 
+              </div>
+            </div>
         </div>
     </div>
   </body>
@@ -50,5 +45,6 @@
 <div id="gameDiv" class="vh-100 d-flex flex-column">
 
 </div>
-<script type="module" src="freeMode.js"></script>
+<script>var exports = {};</script>
+<script src="../CLI.js"></script>
 </body>
