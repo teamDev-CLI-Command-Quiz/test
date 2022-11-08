@@ -7,114 +7,16 @@
 	
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-		<link rel="stylesheet" href="../style.css">
-		<script src="https://unpkg.com/vue@3.1.5"></script>
-		<title>Quiz5</title>
-	</head>
-	<body class="bg-result">
-		<div class="vh-100 d-flex flex-column justify-content-center">
-			<div class="text-right px-5 py-2">
-				<button type="button" class="btn border-success text-success rem1p2 bg-result" id="submit">提出</button>
-			</div>			
-			<div class="row">
-				<div id="Quiz" class="bg-result container border border-success vh-60 p-3  col-md-5">
-					<div id="title" class="p-5 text-center">
-						<h3 class="text-success">問題５：pwdコマンド</h3>
-					</div>
-					<div id="content" class="p-3">
-						<h4 class="text-success">pythonディレクトリの直下にmathディレクトリとwebディレクトリがあります。cdコマンドでカレントディレクトリを変更し、pwdコマンドでmathディレクトリまでの道のりを確認しましょう。</h4>
-					</div>
-					<div id="content" class="p-3">
-						<h5 class="text-success">ヒント：pwd 引数なし　でカレントディレクトリまでに存在するディレクトリが確認できます。</h5>
-					</div>
-				</div>			
-				<div class="container border border-success vh-60 CLI p-3 output-text col-md-5">
-					<div class="container col-12 px-0" id="content">  
-						<div id="CLIOutputDiv" class="CLI output-text ml-3"></div> 
-						<div id="app">
-							<p class="m-0 output-text  ml-3">                
-								<span>User</span>
-								<span> @ </span>
-								<span > MacBook %                  
-									<input 
-									style="
-									background-color:transparent;
-									color: rgb(3, 239, 3);
-									outline: solid 1px black;
-									border:none;
-									font-size:x-large;width:60%"
-									placeholder="type any command"
-									type="text" 
-									v-model ="CLITextInput" 
-									v-on:keydown.enter="executeCLI" 
-									v-on:keydown.up="cursorUpToGetHistories"
-									v-on:keydown.down="cursorDownToGetHistories"
-									>
-								</span>
-							</p>
-						</div>
-					</div>  		
-				</div>
-				<div class="container input-group py-4 p-3 col-md-5">
-					<div id="dictionary" class="input-box rem1p5">
-						<a href="../fileDirectoryQuizList.html" class="text-success" target="blank">問題一覧へ</a>
-					</div>
-				</div>     
-				<div class="container input-group py-2 p-3  col-md-5"></div>
-				</div>     
-			</div>
-		</div>
-		<div class="d-none" id="submitView">
-			<div class="po-ab d-flex justify-content-center align-items-center">
-				<div class="d-flex align-items-center flex-column">
-					<h2 class="text-center">提出しますか？</h2>
-					<div class="d-flex justify-content-center p-4">
-						<button type="button" class="btn btn-primary m-2" id="submitViewSubmit">提出する</button>
-						<button type="button" class="btn btn-success m-2" id="submitViewClose">閉じる</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="d-none" id="scoringView">
-			<div class="po-ab d-flex justify-content-center align-items-center">
-				<div id="resultAnimation">
-					<span></span><span></span><span></span>
-					<span></span><span></span><span></span>
-					<span></span><span></span><span></span>
-					<span></span><span></span>
-				</div>
-				<div class="d-flex align-items-center flex-column">
-					<h3 class="text-center" id="scoring"></h3>
-					<button type="button" class="btn btn-success m-2" id="scoringViewClose">閉じる</button>
-				</div>
-			</div>
-		</div>
-	</body>
-</html>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-
-<body style="background: black">
-<div id="gameDiv" class="vh-60 d-flex flex-column">
-
-</div>
-<script type="module" src="quiz5.js"></script>
-</body>
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 		<link rel="stylesheet" href="../fileDirectory.css">
 		<title>Quiz2</title>
 	</head>
 	<body class="bg-result">
 		<div class="vh-100 d-flex flex-column justify-content-center">
+			<div class="text-left px-5 py-2">
+				<div class="input-box rem1p5">
+					<a href="../fileDirectoryQuizList.html" class="text-success rem1p5 btn border-success" target="blank">問題一覧へ</a>
+				</div>
+			</div>	
 			<div class="text-right px-5 py-2">
 				<button type="button" class="btn border-success text-success rem1p2 bg-result" id="submit">提出</button>
 			</div>			
