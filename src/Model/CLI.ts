@@ -68,10 +68,8 @@ export class CLI{
     }
     
     public commandLineParser():string[]{
-        let parsedStringInputArray = this.CLITextInputDiv.value.trim().split(" ");
+        let parsedStringInputArray:string[] = this.CLITextInputDiv.value.trim().split(" ");
         this.setCLITextInput = this.CLITextInputDiv.value;
-        console.log(parsedStringInputArray)
-        console.log(this.setCLITextInput)
         return parsedStringInputArray;
     }
 

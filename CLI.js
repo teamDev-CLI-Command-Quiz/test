@@ -1,10 +1,3 @@
-// public submit():void{
-//     let result:string;
-//     if (this.grading()) result = "正解!!";
-//     else result = "不正解!!";
-//     View.appendResultParagraph(this,result)
-//     View.resetCLITextInput(this)
-// }
 var View = /** @class */ (function () {
     function View() {
     }
@@ -584,10 +577,17 @@ var Controller = /** @class */ (function () {
             View.resetCLITextInput(CLI);
         });
     };
+    Controller.detectQuestionNumber = function () {
+        var questionBtn = document.getElementById("question");
+        questionBtn.addEventListener("click", function () {
+            return questionBtn;
+        });
+    };
     Controller.activateCLI = function (CLI) {
         this.callSubmit(CLI);
         this.callHistoriesByKeyDown(CLI);
         this.executeCLI(CLI);
+        this.detectQuestionNumber();
     };
     return Controller;
 }());

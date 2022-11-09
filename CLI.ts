@@ -532,10 +532,14 @@ class Controller{
         })
     }
 
+    public static detectQuestionNumber():any{
+    }
+
     public static activateCLI(CLI:CLI):void{
         this.callSubmit(CLI);
         this.callHistoriesByKeyDown(CLI);
         this.executeCLI(CLI);
+        this.detectQuestionNumber()
     }
 }
 let cli:CLI = new CLI()

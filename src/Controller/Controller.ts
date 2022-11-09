@@ -26,16 +26,22 @@ export class Controller{
     }
 
     public static callSubmit(CLI:CLI):void{
-        let submitBtn:HTMLButtonElement = document.getElementById("submit")  as HTMLButtonElement;
+        let submitBtn:HTMLButtonElement = document.getElementById("submit") as HTMLButtonElement;
         submitBtn.addEventListener("click", function(){
             View.appendResultParagraph(CLI,CLI.submit())
             View.resetCLITextInput(CLI)
         })
     }
 
+    public static detectQuestionNumber():any{
+        let questionBtn:HTMLButtonElement = document.getElementById("question") as HTMLButtonElement;
+        return questionBtn;
+    }
+
     public static activateCLI(CLI:CLI):void{
         this.callSubmit(CLI);
         this.callHistoriesByKeyDown(CLI);
         this.executeCLI(CLI);
+        this.detectQuestionNumber();
     }
 }
