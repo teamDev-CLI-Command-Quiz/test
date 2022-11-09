@@ -95,8 +95,6 @@ var CLI = /** @class */ (function () {
     CLI.prototype.commandLineParser = function () {
         var parsedStringInputArray = this.CLITextInputDiv.value.trim().split(" ");
         this.setCLITextInput = this.CLITextInputDiv.value;
-        console.log(parsedStringInputArray);
-        console.log(this.setCLITextInput);
         return parsedStringInputArray;
     };
     CLI.prototype.grading = function () {

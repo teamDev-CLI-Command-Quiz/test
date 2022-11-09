@@ -30,18 +30,20 @@ export class Controller{
         submitBtn.addEventListener("click", function(){
             View.appendResultParagraph(CLI,CLI.submit())
             View.resetCLITextInput(CLI)
+            Controller.detectAndSendQuestionNumber(CLI);
         })
     }
 
-    public static detectQuestionNumber():any{
-        let questionBtn:HTMLButtonElement = document.getElementById("question") as HTMLButtonElement;
-        return questionBtn;
+    public static detectAndSendQuestionNumber(CLI:CLI):void{
+        let question:string = document.getElementById("question")?.textContent as string;
+        let questionNumber:string = question.substring(0,question.indexOf("："));
+        CLI.setQuestionNumber = questionNumber;
+        console.log(question.substring(0,question.indexOf("：")));
     }
 
     public static activateCLI(CLI:CLI):void{
         this.callSubmit(CLI);
         this.callHistoriesByKeyDown(CLI);
         this.executeCLI(CLI);
-        this.detectQuestionNumber();
     }
 }

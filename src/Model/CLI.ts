@@ -5,7 +5,8 @@ export class CLI{
     private histories:[string];
     private historiesCnt:number;
     private User:FileSystems;
-    private Answer:FileSystems;
+    private Answer:Array<string>;
+    private QuestionNumber:string;
     private CLITextInputDiv:HTMLInputElement
     private CLITextOutputDiv:HTMLElement;
     private vueCLI:HTMLElement|null;
@@ -17,7 +18,8 @@ export class CLI{
         ];
         this.historiesCnt = 0;
         this.User = new FileSystems();
-        this.Answer = new FileSystems();
+        this.Answer = [];
+        this.QuestionNumber = "";
         this.CLITextInputDiv = document.getElementById("CLIInputDiv") as HTMLInputElement;
         this.CLITextOutputDiv = document.getElementById("CLIOutputDiv") as HTMLElement;
         this.vueCLI = document.getElementById("content");
@@ -66,6 +68,14 @@ export class CLI{
     public set setCLITextInputDiv(text:string){
         this.CLITextInputDiv.value = text;
     }
+
+    public get getQuestionNumber():string{
+        return this.QuestionNumber;
+    }
+
+    public set setQuestionNumber(number:string){
+        this.QuestionNumber = number;
+    }
     
     public commandLineParser():string[]{
         let parsedStringInputArray:string[] = this.CLITextInputDiv.value.trim().split(" ");
@@ -74,7 +84,8 @@ export class CLI{
     }
 
     public grading():boolean{
-        return this.Answer.getCurrentDir!.getName === this.User.getCurrentDir!.getName;    
+        // return this.Answer.getCurrentDir!.getName === this.User.getCurrentDir!.getName;    
+        return true
     }
 
     public submit():string{
@@ -133,5 +144,56 @@ export class CLI{
                 result = "No such command";
         }
         return result;
+    }
+
+    public makeAnswerAndFirstStatus(){
+        switch(this.QuestionNumber){
+            case "問題１":
+                this.Answer.push("mkdir python","mkdir Java");
+                break;
+            case "問題２":
+                this.Answer.push("mkdir python","cd python");
+                break;
+            case "問題３":
+                this.User.mkdir("python");
+                this.User.cd("python");
+                this.User.mkdir("math");
+                this.User.mkdir("web");
+                this.User.cd("math");
+                this.Answer.push("cd ..","cd ..","cd web");
+                break;
+            case "問題４":
+                this.Answer.push("mkdir python","touch test.py")
+                break;
+            case "問題５":
+                this.User.mkdir("python");
+                this.User.cd("python");
+                this.User.mkdir("math");
+                this.User.mkdir("web");
+                this.User.cd("math");
+                this.Answer.push("pwd")
+                break;
+            case "問題６":
+                this.User.mkdir("python");
+                this.User.cd("python");
+                this.User.mkdir("math");
+                this.User.mkdir("web");
+                this.User.cd("math");
+                this.User.touch("factorial.py");
+                this.User.mkdir("differential");
+                this.Answer.push("mkdir python","cd python")
+                break;
+            case "問題７":
+                this.User.mkdir("python");
+                this.User.cd("python");
+                this.User.mkdir("math");
+                this.User.mkdir("web");
+                this.User.cd("math");
+                this.User.touch("factorial.py");
+                this.User.mkdir("differential");
+
+                this.Answer.push("mkdir python","cd python")
+                break;               
+        }
     }
 }

@@ -38,7 +38,8 @@ var CLI = /** @class */ (function () {
         ];
         this.historiesCnt = 0;
         this.User = new FileSystems();
-        this.Answer = new FileSystems();
+        this.Answer = [];
+        this.QuestionNumber = "";
         this.CLITextInputDiv = document.getElementById("CLIInputDiv");
         this.CLITextOutputDiv = document.getElementById("CLIOutputDiv");
         this.vueCLI = document.getElementById("content");
@@ -120,6 +121,20 @@ var CLI = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(CLI.prototype, "getQuestionNumber", {
+        get: function () {
+            return this.QuestionNumber;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(CLI.prototype, "setQuestionNumber", {
+        set: function (number) {
+            this.QuestionNumber = number;
+        },
+        enumerable: false,
+        configurable: true
+    });
     CLI.prototype.commandLineParser = function () {
         var parsedStringInputArray = this.CLITextInputDiv.value.trim().split(" ");
         this.setCLITextInput = this.CLITextInputDiv.value;
@@ -128,7 +143,8 @@ var CLI = /** @class */ (function () {
         return parsedStringInputArray;
     };
     CLI.prototype.grading = function () {
-        return this.Answer.getCurrentDir.getName === this.User.getCurrentDir.getName;
+        // return this.Answer.getCurrentDir!.getName === this.User.getCurrentDir!.getName;    
+        return true;
     };
     CLI.prototype.submit = function () {
         var result;
@@ -185,6 +201,55 @@ var CLI = /** @class */ (function () {
                 result = "No such command";
         }
         return result;
+    };
+    CLI.prototype.makeAnswerAndFirstStatus = function () {
+        switch (this.QuestionNumber) {
+            case "問題１":
+                this.Answer.push("mkdir python", "mkdir Java");
+                break;
+            case "問題２":
+                this.Answer.push("mkdir python", "cd python");
+                break;
+            case "問題３":
+                this.User.mkdir("python");
+                this.User.cd("python");
+                this.User.mkdir("math");
+                this.User.mkdir("web");
+                this.User.cd("math");
+                this.Answer.push("cd ..", "cd ..", "cd web");
+                break;
+            case "問題４":
+                this.Answer.push("mkdir python", "touch test.py");
+                break;
+            case "問題５":
+                this.User.mkdir("python");
+                this.User.cd("python");
+                this.User.mkdir("math");
+                this.User.mkdir("web");
+                this.User.cd("math");
+                this.Answer.push("pwd");
+                break;
+            case "問題６":
+                this.User.mkdir("python");
+                this.User.cd("python");
+                this.User.mkdir("math");
+                this.User.mkdir("web");
+                this.User.cd("math");
+                this.User.touch("factorial.py");
+                this.User.mkdir("differential");
+                this.Answer.push("mkdir python", "cd python");
+                break;
+            case "問題７":
+                this.User.mkdir("python");
+                this.User.cd("python");
+                this.User.mkdir("math");
+                this.User.mkdir("web");
+                this.User.cd("math");
+                this.User.touch("factorial.py");
+                this.User.mkdir("differential");
+                this.Answer.push("mkdir python", "cd python");
+                break;
+        }
     };
     return CLI;
 }());
@@ -577,17 +642,19 @@ var Controller = /** @class */ (function () {
             View.resetCLITextInput(CLI);
         });
     };
-    Controller.detectQuestionNumber = function () {
-        var questionBtn = document.getElementById("question");
-        questionBtn.addEventListener("click", function () {
-            return questionBtn;
-        });
+    Controller.detectAndSendQuestionNumber = function (CLI) {
+        var _a;
+        var question = (_a = document.getElementById("question")) === null || _a === void 0 ? void 0 : _a.textContent;
+        var questionNumber = question.substring(0, question.indexOf("："));
+        CLI.setQuestionNumber = questionNumber;
+        console.log(question.substring(0, question.indexOf("：")));
     };
     Controller.activateCLI = function (CLI) {
         this.callSubmit(CLI);
         this.callHistoriesByKeyDown(CLI);
         this.executeCLI(CLI);
-        this.detectQuestionNumber();
+        this.detectAndSendQuestionNumber(CLI);
+        CLI.makeAnswerAndFirstStatus();
     };
     return Controller;
 }());

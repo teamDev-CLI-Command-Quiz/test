@@ -33,10 +33,19 @@ var Controller = /** @class */ (function () {
             View_1.View.resetCLITextInput(CLI);
         });
     };
+    Controller.detectQuestionNumber = function () {
+        var submitBtn = document.getElementById("submit");
+        submitBtn.addEventListener("click", function () {
+            var _a;
+            var question = (_a = document.getElementById("question")) === null || _a === void 0 ? void 0 : _a.textContent;
+            console.log(question);
+        });
+    };
     Controller.activateCLI = function (CLI) {
         this.callSubmit(CLI);
         this.callHistoriesByKeyDown(CLI);
         this.executeCLI(CLI);
+        this.detectQuestionNumber();
     };
     return Controller;
 }());
