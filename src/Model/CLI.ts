@@ -82,17 +82,23 @@ export class CLI{
         this.setCLITextInput = this.CLITextInputDiv.value;
         return parsedStringInputArray;
     }
-
+    
     public grading():boolean{
         let answerStack:Array<string> = this.Answer
-        let userHistories:Array<string> = this.histories
-        console.log(answerStack)
-        console.log(userHistories)
-        
-        while (answerStack.length != 0 && userHistories.length > 1){
-            if (userHistories.pop()!.replace(" ", "").slice(0, -1) === answerStack[answerStack.length - 1].replace(" ", "")) answerStack.pop()
+        let userHistories:[string] = this.getHistories
+        // console.log(answerStack[answerStack.length - 1])
+        // console.log(answerStack)
+        // console.log(userHistories)
+        let index:number = userHistories.length - 1;
+
+        while (index > 0 && answerStack.length > 0){
+            let userHistory:string = userHistories[index].slice(0, -1)
+            console.log(userHistory)
+            console.log(answerStack[answerStack.length - 1])
+            if (userHistory === answerStack[answerStack.length - 1]) answerStack.pop();
+            index --;
         }
-        return answerStack.length === 0
+        return answerStack.length === 0;
     }
 
     public submit():string{
