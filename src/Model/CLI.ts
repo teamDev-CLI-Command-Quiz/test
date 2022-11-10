@@ -6,7 +6,7 @@ export class CLI{
     private historiesCnt:number;
     private User:FileSystems;
     private Answer:Array<string>;
-    private QuestionNumber:string;
+    private QuestionID:string;
     private CLITextInputDiv:HTMLInputElement
     private CLITextOutputDiv:HTMLElement;
     private vueCLI:HTMLElement|null;
@@ -19,7 +19,7 @@ export class CLI{
         this.historiesCnt = 0;
         this.User = new FileSystems();
         this.Answer = [];
-        this.QuestionNumber = "";
+        this.QuestionID = "";
         this.CLITextInputDiv = document.getElementById("CLIInputDiv") as HTMLInputElement;
         this.CLITextOutputDiv = document.getElementById("CLIOutputDiv") as HTMLElement;
         this.vueCLI = document.getElementById("content");
@@ -69,26 +69,23 @@ export class CLI{
         this.CLITextInputDiv.value = text;
     }
 
-    public get getQuestionNumber():string{
-        return this.QuestionNumber;
+    public get getQuestionID():string{
+        return this.QuestionID;
     }
 
-    public set setQuestionNumber(number:string){
-        this.QuestionNumber = number;
+    public set setQuestionID(number:string){
+        this.QuestionID = number;
     }
-    
+    //CLIに入力された文字列をスペースごとに配列に格納するメソッド
     public commandLineParser():string[]{
         let parsedStringInputArray:string[] = this.CLITextInputDiv.value.trim().split(" ");
         this.setCLITextInput = this.CLITextInputDiv.value;
         return parsedStringInputArray;
     }
-
+    //採点用メソッド、コマンドがあってるかだけでなく、コマンド入力の順番を確認する必要があるためスタックを採用
     public grading():boolean{
         let answerStack:Array<string> = this.Answer
         let userHistories:[string] = this.getHistories
-        // console.log(answerStack[answerStack.length - 1])
-        // console.log(answerStack)
-        // console.log(userHistories)
         let index:number = userHistories.length - 1;
 
         while (index > 0 && answerStack.length > 0){
@@ -108,7 +105,7 @@ export class CLI{
 
         return result
     }
-
+    //パースされたCLIへの入力を受け取り、ファイルディレクトリ構造を作成し、結果を文字列で返すメソッド
     public evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray:string[]):string{
         let result:string = "";
         console.log(parsedStringInputArray);
@@ -158,9 +155,9 @@ export class CLI{
         }
         return result;
     }
-
+    //模範解答と初期のファイルディレクトリ構造を作成するメソッド
     public makeAnswerAndFirstStatus(){
-        switch(this.QuestionNumber){
+        switch(this.QuestionID){
             case "問題１":
                 this.Answer.push("mkdir python","mkdir Java");
                 break;
@@ -194,7 +191,7 @@ export class CLI{
                 this.User.cd("math");
                 this.User.touch("factorial.py");
                 this.User.mkdir("differential");
-                this.Answer.push("mkdir python","cd python")
+                this.Answer.push("ls")
                 break;
             case "問題７":
                 this.User.mkdir("python");
@@ -205,7 +202,7 @@ export class CLI{
                 this.User.touch("factorial.py");
                 this.User.mkdir("differential");
 
-                this.Answer.push("mkdir python","cd python")
+                this.Answer.push("rm factorial.py")
                 break;               
         }
     }
