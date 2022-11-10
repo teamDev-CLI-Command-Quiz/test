@@ -82,7 +82,7 @@ export class CLI{
         this.setCLITextInput = this.CLITextInputDiv.value;
         return parsedStringInputArray;
     }
-    
+
     public grading():boolean{
         let answerStack:Array<string> = this.Answer
         let userHistories:[string] = this.getHistories
@@ -92,7 +92,7 @@ export class CLI{
         let index:number = userHistories.length - 1;
 
         while (index > 0 && answerStack.length > 0){
-            let userHistory:string = userHistories[index].slice(0, -1)
+            let userHistory:string = userHistories[index].replace(" ","")
             console.log(userHistory)
             console.log(answerStack[answerStack.length - 1])
             if (userHistory === answerStack[answerStack.length - 1]) answerStack.pop();

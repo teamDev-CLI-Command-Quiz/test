@@ -47,7 +47,7 @@ class CLI{
     private historiesCnt:number;
     private User:FileSystems;
     private Answer:string[];
-    private QuestionNumber:string;
+    private QuestionID:string;
     private CLITextInputDiv:HTMLInputElement
     private CLITextOutputDiv:HTMLElement;
     private vueCLI:HTMLElement|null;
@@ -60,7 +60,7 @@ class CLI{
         this.historiesCnt = 0;
         this.User = new FileSystems();
         this.Answer = [];
-        this.QuestionNumber = "";
+        this.QuestionID = "";
         this.CLITextInputDiv = document.getElementById("CLIInputDiv") as HTMLInputElement;
         this.CLITextOutputDiv = document.getElementById("CLIOutputDiv") as HTMLElement;
         this.vueCLI = document.getElementById("content");
@@ -110,12 +110,12 @@ class CLI{
         this.CLITextInputDiv.value = text;
     }
 
-    public get getQuestionNumber():string{
-        return this.QuestionNumber;
+    public get getQuestionID():string{
+        return this.QuestionID;
     }
 
-    public set setQuestionNumber(number:string){
-        this.QuestionNumber = number;
+    public set setQuestionID(number:string){
+        this.QuestionID = number;
     }
     
     public commandLineParser():string[]{
@@ -133,10 +133,11 @@ class CLI{
         let index:number = userHistories.length - 1;
 
         while (index > 0 && answerStack.length > 0){
-            let userHistory:string = userHistories[index].slice(0, -1)
-            console.log(userHistory)
-            console.log(answerStack[answerStack.length - 1])
-            if (userHistory === answerStack[answerStack.length - 1]) answerStack.pop();
+            let userHistory:string = userHistories[index].replace(/[^0-9a-z]/gi, '').toLowerCase()
+            let answer:string = answerStack[answerStack.length - 1].replace(/[^0-9a-z]/gi, '').toLowerCase()
+            // console.log(userHistory)
+            // console.log(answerStack[answerStack.length - 1].replace(/[^0-9a-z]/gi, ''))
+            if (userHistory === answer) answerStack.pop();
             index --;
         }
         return answerStack.length === 0;
@@ -199,7 +200,7 @@ class CLI{
         return result;
     }
     public makeAnswerAndFirstStatus(){
-        switch(this.QuestionNumber){
+        switch(this.QuestionID){
             case "問題１":
                 this.Answer.push("mkdir python","mkdir Java");
                 break;
@@ -234,7 +235,7 @@ class CLI{
                 this.User.touch("factorial.py");
                 this.User.mkdir("differential");
 
-                this.Answer.push("mkdir python","cd python")
+                this.Answer.push("ls")
                 break;
             case "問題７":
                 this.User.mkdir("python");
@@ -245,7 +246,7 @@ class CLI{
                 this.User.touch("factorial.py");
                 this.User.mkdir("differential");
 
-                this.Answer.push("mkdir python","cd python")
+                this.Answer.push("rm factorial.py")
                 break;               
         }
     }
@@ -607,7 +608,7 @@ class Controller{
     public static detectAndSendQuestionNumber(CLI:CLI):void{
         let question:string = document.getElementById("question")?.textContent as string;
         let questionNumber:string = question.substring(0,question.indexOf("："));
-        CLI.setQuestionNumber = questionNumber;
+        CLI.setQuestionID = questionNumber;
         console.log(question.substring(0,question.indexOf("：")));
     }
 

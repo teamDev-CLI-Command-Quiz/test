@@ -39,7 +39,7 @@ var CLI = /** @class */ (function () {
         this.historiesCnt = 0;
         this.User = new FileSystems();
         this.Answer = [];
-        this.QuestionNumber = "";
+        this.QuestionID = "";
         this.CLITextInputDiv = document.getElementById("CLIInputDiv");
         this.CLITextOutputDiv = document.getElementById("CLIOutputDiv");
         this.vueCLI = document.getElementById("content");
@@ -121,16 +121,16 @@ var CLI = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(CLI.prototype, "getQuestionNumber", {
+    Object.defineProperty(CLI.prototype, "getQuestionID", {
         get: function () {
-            return this.QuestionNumber;
+            return this.QuestionID;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(CLI.prototype, "setQuestionNumber", {
+    Object.defineProperty(CLI.prototype, "setQuestionID", {
         set: function (number) {
-            this.QuestionNumber = number;
+            this.QuestionID = number;
         },
         enumerable: false,
         configurable: true
@@ -148,10 +148,11 @@ var CLI = /** @class */ (function () {
         // console.log(userHistories)
         var index = userHistories.length - 1;
         while (index > 0 && answerStack.length > 0) {
-            var userHistory = userHistories[index].slice(0, -1);
-            console.log(userHistory);
-            console.log(answerStack[answerStack.length - 1]);
-            if (userHistory === answerStack[answerStack.length - 1])
+            var userHistory = userHistories[index].replace(/[^0-9a-z]/gi, '').toLowerCase();
+            var answer = answerStack[answerStack.length - 1].replace(/[^0-9a-z]/gi, '').toLowerCase();
+            // console.log(userHistory)
+            // console.log(answerStack[answerStack.length - 1].replace(/[^0-9a-z]/gi, ''))
+            if (userHistory === answer)
                 answerStack.pop();
             index--;
         }
@@ -213,7 +214,7 @@ var CLI = /** @class */ (function () {
         return result;
     };
     CLI.prototype.makeAnswerAndFirstStatus = function () {
-        switch (this.QuestionNumber) {
+        switch (this.QuestionID) {
             case "問題１":
                 this.Answer.push("mkdir python", "mkdir Java");
                 break;
@@ -247,7 +248,7 @@ var CLI = /** @class */ (function () {
                 this.User.cd("math");
                 this.User.touch("factorial.py");
                 this.User.mkdir("differential");
-                this.Answer.push("mkdir python", "cd python");
+                this.Answer.push("ls");
                 break;
             case "問題７":
                 this.User.mkdir("python");
@@ -257,7 +258,7 @@ var CLI = /** @class */ (function () {
                 this.User.cd("math");
                 this.User.touch("factorial.py");
                 this.User.mkdir("differential");
-                this.Answer.push("mkdir python", "cd python");
+                this.Answer.push("rm factorial.py");
                 break;
         }
     };
@@ -656,7 +657,7 @@ var Controller = /** @class */ (function () {
         var _a;
         var question = (_a = document.getElementById("question")) === null || _a === void 0 ? void 0 : _a.textContent;
         var questionNumber = question.substring(0, question.indexOf("："));
-        CLI.setQuestionNumber = questionNumber;
+        CLI.setQuestionID = questionNumber;
         console.log(question.substring(0, question.indexOf("：")));
     };
     Controller.activateCLI = function (CLI) {
