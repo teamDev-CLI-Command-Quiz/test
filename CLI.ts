@@ -46,7 +46,7 @@ class CLI{
     private histories:[string];
     private historiesCnt:number;
     private User:FileSystems;
-    private Answer:Array<string>;
+    private Answer:string[];
     private QuestionNumber:string;
     private CLITextInputDiv:HTMLInputElement
     private CLITextOutputDiv:HTMLElement;
@@ -121,14 +121,25 @@ class CLI{
     public commandLineParser():string[]{
         let parsedStringInputArray = this.CLITextInputDiv.value.trim().split(" ");
         this.setCLITextInput = this.CLITextInputDiv.value;
-        console.log(parsedStringInputArray)
-        console.log(this.setCLITextInput)
         return parsedStringInputArray;
     }
 
     public grading():boolean{
-        // return this.Answer.getCurrentDir!.getName === this.User.getCurrentDir!.getName;    
-        return true
+        let answerStack:Array<string> = this.Answer
+        let userHistories:[string] = this.getHistories
+        // console.log(answerStack[answerStack.length - 1])
+        // console.log(answerStack)
+        // console.log(userHistories)
+        let index:number = userHistories.length - 1;
+
+        while (index > 0 && answerStack.length > 0){
+            let userHistory:string = userHistories[index].slice(0, -1)
+            console.log(userHistory)
+            console.log(answerStack[answerStack.length - 1])
+            if (userHistory === answerStack[answerStack.length - 1]) answerStack.pop();
+            index --;
+        }
+        return answerStack.length === 0;
     }
 
     public submit():string{
@@ -141,7 +152,6 @@ class CLI{
 
     public evaluatedResultsStringFromParsedStringInputArray(parsedStringInputArray:string[]):string{
         let result:string = "";
-        console.log(parsedStringInputArray);
         let argA:string = parsedStringInputArray[1];
         let argB:string = parsedStringInputArray[2];
         let commandName:string = parsedStringInputArray[0];
@@ -205,7 +215,7 @@ class CLI{
                 this.Answer.push("cd ..","cd ..","cd web");
                 break;
             case "問題４":
-                this.Answer.push("mkdir python","touch test.py")
+                this.Answer.push("mkdir python","cd python","touch test.py")
                 break;
             case "問題５":
                 this.User.mkdir("python");
@@ -223,7 +233,7 @@ class CLI{
                 this.User.cd("math");
                 this.User.touch("factorial.py");
                 this.User.mkdir("differential");
-                
+
                 this.Answer.push("mkdir python","cd python")
                 break;
             case "問題７":

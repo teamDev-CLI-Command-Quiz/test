@@ -138,13 +138,24 @@ var CLI = /** @class */ (function () {
     CLI.prototype.commandLineParser = function () {
         var parsedStringInputArray = this.CLITextInputDiv.value.trim().split(" ");
         this.setCLITextInput = this.CLITextInputDiv.value;
-        console.log(parsedStringInputArray);
-        console.log(this.setCLITextInput);
         return parsedStringInputArray;
     };
     CLI.prototype.grading = function () {
-        // return this.Answer.getCurrentDir!.getName === this.User.getCurrentDir!.getName;    
-        return true;
+        var answerStack = this.Answer;
+        var userHistories = this.getHistories;
+        // console.log(answerStack[answerStack.length - 1])
+        // console.log(answerStack)
+        // console.log(userHistories)
+        var index = userHistories.length - 1;
+        while (index > 0 && answerStack.length > 0) {
+            var userHistory = userHistories[index].slice(0, -1);
+            console.log(userHistory);
+            console.log(answerStack[answerStack.length - 1]);
+            if (userHistory === answerStack[answerStack.length - 1])
+                answerStack.pop();
+            index--;
+        }
+        return answerStack.length === 0;
     };
     CLI.prototype.submit = function () {
         var result;
@@ -156,7 +167,6 @@ var CLI = /** @class */ (function () {
     };
     CLI.prototype.evaluatedResultsStringFromParsedStringInputArray = function (parsedStringInputArray) {
         var result = "";
-        console.log(parsedStringInputArray);
         var argA = parsedStringInputArray[1];
         var argB = parsedStringInputArray[2];
         var commandName = parsedStringInputArray[0];
@@ -219,7 +229,7 @@ var CLI = /** @class */ (function () {
                 this.Answer.push("cd ..", "cd ..", "cd web");
                 break;
             case "問題４":
-                this.Answer.push("mkdir python", "touch test.py");
+                this.Answer.push("mkdir python", "cd python", "touch test.py");
                 break;
             case "問題５":
                 this.User.mkdir("python");

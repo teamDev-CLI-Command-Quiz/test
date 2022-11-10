@@ -84,8 +84,15 @@ export class CLI{
     }
 
     public grading():boolean{
-        // return this.Answer.getCurrentDir!.getName === this.User.getCurrentDir!.getName;    
-        return true
+        let answerStack:Array<string> = this.Answer
+        let userHistories:Array<string> = this.histories
+        console.log(answerStack)
+        console.log(userHistories)
+        
+        while (answerStack.length != 0 && userHistories.length > 1){
+            if (userHistories.pop()!.replace(" ", "").slice(0, -1) === answerStack[answerStack.length - 1].replace(" ", "")) answerStack.pop()
+        }
+        return answerStack.length === 0
     }
 
     public submit():string{
@@ -163,7 +170,7 @@ export class CLI{
                 this.Answer.push("cd ..","cd ..","cd web");
                 break;
             case "問題４":
-                this.Answer.push("mkdir python","touch test.py")
+                this.Answer.push("mkdir python","cd python","touch test.py")
                 break;
             case "問題５":
                 this.User.mkdir("python");
