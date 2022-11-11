@@ -201,7 +201,6 @@ export class CLI{
                 this.User.cd("math");
                 this.User.touch("factorial.py");
                 this.User.mkdir("differential");
-
                 this.Answer.push("rm factorial.py")
                 break;               
         }
