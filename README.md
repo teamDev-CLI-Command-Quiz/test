@@ -24,7 +24,7 @@ TypeScriptでOOP、MVCを意識し、連結リスト、木構造や探索アル�
 ③問題の作成：簡単な問題から出題し、そこで学習したことが次の問題に活きるように作成しました。
 
 ## これからの改善点、拡張案
-LinekdListクラスを拡張すればGitコマンドのクイズやLinuxコマンドのクイズも作れるので継承などを使い挑戦してみようと思う。
+LinekdListクラスを拡張すればGitコマンドのクイズやLinuxコマンドのクイズも作れるので継承などを使い挑戦してみようと思います。
 
 ## URL
 https://teamdev-cli-command-quiz.github.io/test/
