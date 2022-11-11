@@ -2,13 +2,14 @@
 ## Description
 TypeScriptでOOP、MVCを意識し、連結リスト、木構造や探索アルゴリズムを使ってファイルディレクトリシステムを作り、それを応用したクイズアプリケーションを作りました
 
-## 使用技術と期間
-
+## 使用技術
 使用技術　HTML/CSS/TypeScript/JavaScript
 
-期間　第１期：2022年9月中頃の２週間JavaScriptのみで作成　第２期：2022年10月下旬から現在作成中　　
+## 期間
+期間　第1期：2022年9月中頃の２週間JavaScriptのみで作成　第2期：2022年10月下旬からTypeScriptで改修、現在作成中　　
 
 第1期では、私個人でCLI(<https://github.com/Hayato-Kossy/TypeScript-FileDirectorySystem>)を作成後、これをもとに４名で作成。私は主にデザイン以外を全て担当。  
+
 第2期では、BlackJack(<https://github.com/Hayato-Kossy/BlackJack_TypeScript_MVC>)を作成後、BlackJackで学んだMVC、OOPを活かし、個人でTypeScriptを使って再開発を行いました。
 
 ## 作成の経緯
